@@ -1,5 +1,5 @@
 import React from 'react';
-import Main from './src/screens/main/Main';
+import Main from '@screens/main';
 
 const App: React.FC = () => <Main />;
 

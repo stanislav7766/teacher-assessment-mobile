@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -15,7 +17,7 @@ module.exports = {
   ],
   parserOptions: {
     project: ['./tsconfig.json'],
-    tsconfigRootDir: __dirname,
+    tsconfigRootDir: path.resolve(__dirname, './'),
     sourceType: 'module',
     ecmaVersion: 2018,
     ecmaFeatures: {
@@ -38,7 +40,6 @@ module.exports = {
     'use-isnan': 2,
     'callback-return': 2,
     'import/no-unresolved': 0,
-    // "no-return-await": 2,
     'prefer-destructuring': [
       2,
       {
@@ -64,15 +65,8 @@ module.exports = {
     'no-else-return': 2,
     'no-inner-declarations': 2,
     'no-lonely-if': 2,
-    // "no-magic-numbers": [
-    //   2,
-    //   {
-    //     "ignore": [-1, 0, 1]
-    //   }
-    // ],
     'no-shadow': 2,
     'no-unneeded-ternary': 2,
-    // "no-unused-expressions": 2,
     'no-var': 2,
     '@typescript-eslint/no-redeclare': 0,
     '@typescript-eslint/no-shadow': 0,
