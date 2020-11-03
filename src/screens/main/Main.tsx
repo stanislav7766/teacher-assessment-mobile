@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import useSplash from '../../components/hooks/use-splash/useSplash';
+import useSplash from '../../hooks/use-splash/useSplash';
 import {styles} from './styles';
 import {SPLASH_DISPLAY_LENGTH} from '../../constants/splash';
 
