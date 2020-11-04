@@ -12,10 +12,11 @@
     "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./"
   },
   "dependencies": {
+    "lottie-ios": "3.1.8",
     "lottie-react-native": "^3.5.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
-    "react-native-splash-screen": "^3.2.0"
+    "react-native-easy-router": "^3.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

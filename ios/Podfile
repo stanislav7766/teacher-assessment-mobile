@@ -3,6 +3,9 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
+# pod 'lottie-ios'
+# use_frameworks!
+
 target 'teacher_assessment' do
   config = use_native_modules!
 
