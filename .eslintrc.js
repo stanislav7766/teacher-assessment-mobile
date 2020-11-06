@@ -83,15 +83,8 @@ module.exports = {
       },
     ],
     'require-await': 0,
-    "no-unused-vars": 0,
-  "@typescript-eslint/no-unused-vars": 0,
-
-    // 'no-unused-vars': [
-    //   2,
-    //   {
-    //     args: 'none',
-    //   },
-    // ],
+    'no-unused-vars': 0,
+    '@typescript-eslint/no-unused-vars': 0,
     'no-useless-return': 2,
     'one-var': [2, 'never'],
     'prefer-arrow-callback': 2,
