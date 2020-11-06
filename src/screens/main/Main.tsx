@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {styles} from './styles';
 
-const App: React.FC = () => {
+const Main: React.FC = () => {
   return (
     <View style={styles.wrap}>
       <Text style={styles.body}>Here we go</Text>
@@ -10,4 +10,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Main;
