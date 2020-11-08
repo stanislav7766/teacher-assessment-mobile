@@ -14,4 +14,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  right: {alignItems: 'flex-end'},
+  left: {alignItems: 'flex-start'},
 });
