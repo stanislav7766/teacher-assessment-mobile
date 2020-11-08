@@ -6,7 +6,7 @@ import useSvgFactory from '@hooks/use-svg-factory';
 import getMenu from '@assets/svg-ts/menu';
 import getBack from '@assets/svg-ts/arrow-back';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
-import {styles, col, row, left, right} from './styles';
+import {styles, col, row, left, right, mx0} from './styles';
 
 const svgFactoryParams: ISvgFactoryParams = {width: 40, height: 25, fillAccent: ACCENT_COLOR_BLUE};
 
@@ -25,7 +25,7 @@ const Header = ({SubHeader, onPressBack, onPressMenu}: IHeaderProps) => {
   return (
     <View style={[styles.container, row]}>
       <View style={styles.header}>
-        <View style={row}>
+        <View style={[row, mx0]}>
           <View style={[col, left]}>{Back}</View>
           <View style={[col, styles.subHeader]}>{SubHeader}</View>
           <View style={[col, right]}>{Menu}</View>

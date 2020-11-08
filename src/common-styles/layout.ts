@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
   },
+  mx0: {marginLeft: 0, marginRight: 0},
   row: {
     marginRight: DEFAULT_INDENT,
     marginLeft: DEFAULT_INDENT,
