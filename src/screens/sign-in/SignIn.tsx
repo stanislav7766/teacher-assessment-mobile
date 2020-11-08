@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import SignInView, {IInputs} from '@components/sign-in';
+import SignInView from '@components/sign-in';
+import {IInputs} from 'types/common';
 import {EasyRouterNavigator} from 'react-native-easy-router';
 
 interface SplashProps {

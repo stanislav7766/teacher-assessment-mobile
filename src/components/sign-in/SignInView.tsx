@@ -3,15 +3,12 @@ import {View} from 'react-native';
 import Input from '@common-components/text-input';
 import Btn from '@common-components/btn';
 import Logo from '@components/logo';
+import {IInputs} from 'types/common';
 import {row, mt25, centerXY} from './styles';
 
-export interface IInputs {
-  email: string;
-  password: string;
-}
 type IOnChange = (text: string, type: string) => void;
 
-export interface ISignProps {
+declare interface ISignProps {
   inputs: IInputs;
   errors: IInputs;
   onChange: IOnChange;

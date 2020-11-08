@@ -53,7 +53,8 @@
       "@config/*": ["config/*"],
       "@assets/*": ["assets/*"],
       "@common-styles/*": ["common-styles/*"],
-      "@common-components/*": ["common-components/*"]
+      "@common-components/*": ["common-components/*"],
+      "types/common": ["types/common.d.ts"]
     },
 
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
