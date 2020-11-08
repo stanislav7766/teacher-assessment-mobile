@@ -4,4 +4,10 @@ declare module 'types/common' {
     email: string;
     password: string;
   }
+  export declare interface ISvgFactoryParams {
+    width?: number;
+    height?: number;
+    fillAccent?: string;
+    fillSecondary?: string;
+  }
 }
