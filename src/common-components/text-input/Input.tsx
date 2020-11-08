@@ -18,7 +18,7 @@ const Input = ({
 
   return (
     <View style={[styles.container, {width}]}>
-      <Text style={styles.placeholder}>{placeholder}</Text>
+      {!isEmptyString(placeholder) && <Text style={styles.placeholder}>{placeholder}</Text>}
       <TextInput
         secureTextEntry={secureValue}
         autoCompleteType={autoCompleteType}
@@ -48,7 +48,7 @@ export interface InputProps {
   secureValue?: boolean;
   onChange: (text: string) => void;
   error?: string;
-  placeholder: string;
+  placeholder?: string;
   keyboardType?: KeyboardTypeOptions;
   width?: number;
   height?: number;
