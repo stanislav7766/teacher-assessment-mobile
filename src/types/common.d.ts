@@ -10,4 +10,8 @@ declare module 'types/common' {
     fillAccent?: string;
     fillSecondary?: string;
   }
+  export declare interface ISize {
+    width: number;
+    height: number;
+  }
 }
