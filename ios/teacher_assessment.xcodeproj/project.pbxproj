@@ -161,7 +161,6 @@
 				1FFE98322A86ED7E550AF314 /* Pods-teacher_assessment-tvOSTests.debug.xcconfig */,
 				2B57256EF144C55607127A19 /* Pods-teacher_assessment-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
