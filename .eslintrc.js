@@ -68,9 +68,12 @@ module.exports = {
     'no-shadow': 2,
     'no-unneeded-ternary': 2,
     'no-var': 2,
+    'react/jsx-props-no-spreading': 0,
+    '@typescript-eslint/lines-between-class-members': 0,
     '@typescript-eslint/no-redeclare': 0,
     '@typescript-eslint/no-shadow': 0,
     '@typescript-eslint/no-loop-func': 0,
+    '@typescript-eslint/no-unused-expressions': 0,
     'import/prefer-default-export': 0,
     'import/extensions': [
       0,
