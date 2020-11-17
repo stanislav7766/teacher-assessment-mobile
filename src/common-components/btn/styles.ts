@@ -8,7 +8,7 @@ type Styles = {
 
 const textBase: TextStyle = {
   fontWeight: 'bold',
-  fontSize: 18,
+  fontSize: 16,
   color: WHITE,
 };
 export const btnDefaultSize = {
@@ -28,5 +28,6 @@ export const styles = StyleSheet.create<Styles>({
   },
   title: {
     ...textBase,
+    textAlign: 'center',
   },
 });
