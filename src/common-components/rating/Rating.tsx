@@ -3,11 +3,12 @@ import {View, Text} from 'react-native';
 import getStar from '@assets/svg-ts/star';
 import useSvgFactory from '@hooks/use-svg-factory';
 import {ISvgFactoryParams} from 'types/common';
-import {STAR_ACCENT, STAR_SECONDARY} from '@constants/colors';
-import {styles, starSize} from './styles';
+import {STAR_ACCENT, STAR_SECONDARY, ACCENT_COLOR_BLUE} from '@constants/colors';
+import {styles, starSize, getPointStyles} from './styles';
 
 declare interface IRatingProps {
   point: number;
+  textColor?: string;
 }
 const svgFactoryParams: ISvgFactoryParams = {
   ...starSize,
@@ -15,15 +16,19 @@ const svgFactoryParams: ISvgFactoryParams = {
   fillSecondary: STAR_SECONDARY,
 };
 
-const Rating = ({point}: IRatingProps) => {
+const Rating = ({point, textColor}: IRatingProps) => {
   const StarSvg = useSvgFactory(getStar, svgFactoryParams);
-
+  const pointStyle = getPointStyles(String(textColor));
   return (
     <View style={styles.container}>
-      <Text style={styles.point}>{point}</Text>
+      <Text style={pointStyle}>{point}</Text>
       <View style={styles.star}>{StarSvg}</View>
     </View>
   );
+};
+
+Rating.defaultProps = {
+  textColor: ACCENT_COLOR_BLUE,
 };
 
 export default Rating;
