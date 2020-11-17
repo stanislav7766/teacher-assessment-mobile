@@ -6,7 +6,7 @@ export declare interface IMenuDrawerProps {
   open: boolean;
   tapToClose: boolean;
   paddingGesture: number;
-  menuPercent: number;
+  menuWidth: number;
   animationTime: number;
   position: Position;
   children: ReactNode;

@@ -75,7 +75,7 @@ const MenuDrawer = ({
   children,
   menuContent,
   open,
-  menuPercent,
+  menuWidth,
   animationTime,
   position,
   tapToClose,
@@ -84,7 +84,7 @@ const MenuDrawer = ({
   backgroundColor,
   onShowMenu,
 }: IMenuDrawerProps) => {
-  const DRAWER_WIDTH = SCREEN_WIDTH * (menuPercent / 100);
+  const DRAWER_WIDTH = menuWidth;
   const config = useMemo(
     () => getConfig(position, {open, paddingGesture, drawerWidth: DRAWER_WIDTH, screenWidth: SCREEN_WIDTH}),
     [DRAWER_WIDTH, open, paddingGesture, position],
