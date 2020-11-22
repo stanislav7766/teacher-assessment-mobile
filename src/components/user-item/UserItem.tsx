@@ -1,9 +1,9 @@
+/* eslint-disable global-require */
 import React, {ReactNode, useState, useMemo} from 'react';
 import {View, Image, Text, LayoutChangeEvent} from 'react-native';
 import Rating from '@common-components/rating';
-import defaultAvatar from '@assets/avatar.png';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
-import {mapUsername} from '@utils/map-username';
+import {mapNextLine} from '@utils/map-text';
 import {styles, col, row, right, centerXY, getAvatarStyle, getUsernameStyle, deleteUserPosition} from './styles';
 
 const UserItem = ({Btn, DeleteUser, rating, username, avatar, textColor, mode, userRole}: IUserItemProps) => {
@@ -15,9 +15,9 @@ const UserItem = ({Btn, DeleteUser, rating, username, avatar, textColor, mode, u
   const avatarStyles = useMemo(() => getAvatarStyle(avatarWidth), [avatarWidth]);
   const usernameStyles = useMemo(() => getUsernameStyle(String(textColor)), [textColor]);
 
-  const Avatar = <Image style={avatarStyles} source={avatar ? {uri: avatar} : defaultAvatar} />;
+  const Avatar = <Image style={avatarStyles} source={avatar ? {uri: avatar} : require('@assets/avatar.png')} />;
   const Rate = isRating && <Rating textColor={textColor} point={Number(rating)} />;
-  const Username = <Text style={usernameStyles}>{mapUsername(username)}</Text>;
+  const Username = <Text style={usernameStyles}>{mapNextLine(username)}</Text>;
 
   const AvatarView = (
     <>
