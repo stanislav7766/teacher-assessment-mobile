@@ -8,9 +8,12 @@ type Styles = {
 
 export const styles = StyleSheet.create<Styles>({
   form: {
-    padding: DEFAULT_INDENT,
+    paddingRight: DEFAULT_INDENT,
+    paddingLeft: DEFAULT_INDENT,
+    paddingBottom: DEFAULT_INDENT / 2,
+    paddingTop: DEFAULT_INDENT / 2,
     width: '100%',
-    borderRadius: 10,
+    borderRadius: 15,
     justifyContent: 'center',
     backgroundColor: ACCENT_COLOR_BLUE,
   },
