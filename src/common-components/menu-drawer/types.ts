@@ -14,6 +14,8 @@ export declare interface IMenuDrawerProps {
   opacity: number;
   backgroundColor: string;
   onShowMenu: (show: boolean) => void;
+  onPaddingGestureStart?: () => void;
+  onPaddingGestureEnd?: () => void;
 }
 export declare interface IPlatformContainerProps {
   children: ReactNode;

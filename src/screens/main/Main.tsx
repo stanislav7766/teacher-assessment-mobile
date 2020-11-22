@@ -75,6 +75,7 @@ const Main: React.FC = () => {
   const [shownMenu, setShownMenu] = useState(false);
   const [review, setReview] = useState('');
   const [QAAnswers, setQAAnswers] = useState(QAsAnswer);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   const updateAnswers = (No: number, answer: number): void => {
     const copy = [...QAAnswers];
@@ -109,10 +110,16 @@ const Main: React.FC = () => {
         tapToClose
         backgroundColor={ACCENT_COLOR_BLUE}
         opacity={0.35}
+        onPaddingGestureStart={(): void => {
+          setScrollEnabled(false);
+        }}
+        onPaddingGestureEnd={(): void => {
+          setScrollEnabled(true);
+        }}
       >
         <Header onPressBack={onPress} onPressMenu={onPress} SubHeader={<Text>Main Screen</Text>} />
 
-        <ScrollView pointerEvents="none" style={{marginTop: 50 + DEFAULT_INDENT}}>
+        <ScrollView scrollEnabled={scrollEnabled} style={{marginTop: 50 + DEFAULT_INDENT}}>
           {useMemo(
             () => (
               <View style={[row, {marginTop: DEFAULT_INDENT}]}>

@@ -82,6 +82,8 @@ const MenuDrawer = ({
   paddingGesture,
   opacity,
   backgroundColor,
+  onPaddingGestureStart,
+  onPaddingGestureEnd,
   onShowMenu,
 }: IMenuDrawerProps) => {
   const DRAWER_WIDTH = menuWidth;
@@ -95,6 +97,10 @@ const MenuDrawer = ({
   const updateNativeStyles = (dx: number): void => {
     const value = config.calcOpacity(dx, opacity);
     maskRef.current && maskRef.current.setNativeProps({backgroundColor, opacity: value >= opacity ? opacity : value});
+  };
+  const chooseOnPaddingGesture = (needDisablingScroll: 'enable' | 'disable') => {
+    needDisablingScroll === 'disable' && onPaddingGestureStart && onPaddingGestureStart();
+    needDisablingScroll === 'enable' && onPaddingGestureEnd && onPaddingGestureEnd();
   };
 
   useEffect(() => {
@@ -119,6 +125,7 @@ const MenuDrawer = ({
     !isVerticalSwipe(dx, dy) && config.inPaddingGestureBounds(moveX);
 
   const onPanResponderMove = (_: GestureResponderEvent, {dx, moveX}: PanResponderGestureState): void => {
+    chooseOnPaddingGesture('disable');
     const newOffset = config.calcOffset(dx, moveX);
     config.inBounds(newOffset) && animateDrawer(drawerOffset, {toValue: newOffset, duration: 1, useNativeDriver: true});
     Animated.event([null, {dx: drawerOffset}], {useNativeDriver: true});
@@ -127,13 +134,17 @@ const MenuDrawer = ({
   const onPanResponderRelease = (_: GestureResponderEvent, {dx, dy}: PanResponderGestureState): void => {
     if (isTap(dx, dy)) {
       tapToClose && onShowMenu(false);
+      tapToClose && chooseOnPaddingGesture('enable');
       return;
     }
 
     if (isAllowedSwipe(dx)) {
-      onShowMenu(config.needOpenOrClose(dx));
+      const needOpen = config.needOpenOrClose(dx);
+      onShowMenu(needOpen);
+      chooseOnPaddingGesture(needOpen ? 'disable' : 'enable');
       return;
     }
+    chooseOnPaddingGesture(open ? 'disable' : 'enable');
     const newOffset = open ? config.opened : config.closed;
     animateDrawer(drawerOffset, {toValue: newOffset, duration: animationTime, useNativeDriver: true});
   };
@@ -193,6 +204,11 @@ const MenuDrawer = ({
   );
 
   return <PlatformContainer>{App}</PlatformContainer>;
+};
+
+MenuDrawer.defaultProps = {
+  onPaddingGestureStart: undefined,
+  onPaddingGestureEnd: undefined,
 };
 
 export default MenuDrawer;
