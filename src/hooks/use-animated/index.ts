@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
-import useAnimatedHeight from './useAnimatedHeight';
+import useAnimated from './useAnimated';
 
-export default useAnimatedHeight;
+export default useAnimated;
