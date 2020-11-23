@@ -18,7 +18,7 @@ const svgFactoryParams: ISvgFactoryParams = {
 
 const Rating = ({point, textColor}: IRatingProps) => {
   const StarSvg = useSvgFactory(getStar, svgFactoryParams);
-  const pointStyle = getPointStyles(String(textColor));
+  const pointStyle = getPointStyles(textColor as string);
   return (
     <View style={styles.container}>
       <Text style={pointStyle}>{point}</Text>

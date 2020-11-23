@@ -18,7 +18,7 @@ const AssessmentHeader = ({mode, textColor, rating, avatar, username, height}: I
       </View>
     );
   }
-  const renderUsername = mapNextLineFirst(String(username));
+  const renderUsername = mapNextLineFirst(username as string);
   const avatarStyles = getAvatarStyle(height);
   const Avatar = <Image style={avatarStyles} source={avatar ? {uri: avatar} : require('@assets/avatar.png')} />;
 
@@ -36,7 +36,7 @@ const AssessmentHeader = ({mode, textColor, rating, avatar, username, height}: I
       </View>
       {isTeacherRating && (
         <View style={[styles.right, flexRating]}>
-          <Rating textColor={textColor} point={Number(rating)} />
+          <Rating textColor={textColor} point={rating as number} />
         </View>
       )}
     </View>

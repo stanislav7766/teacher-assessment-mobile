@@ -13,10 +13,10 @@ const UserItem = ({Btn, DeleteUser, rating, username, avatar, textColor, mode, u
   const [avatarWidth, setAvatarWidth] = useState(0);
   const avatarFlexStyle = {flex: isFullMode ? 0.3 : 0.7};
   const avatarStyles = useMemo(() => getAvatarStyle(avatarWidth), [avatarWidth]);
-  const usernameStyles = useMemo(() => getUsernameStyle(String(textColor)), [textColor]);
+  const usernameStyles = useMemo(() => getUsernameStyle(textColor as string), [textColor]);
 
   const Avatar = <Image style={avatarStyles} source={avatar ? {uri: avatar} : require('@assets/avatar.png')} />;
-  const Rate = isRating && <Rating textColor={textColor} point={Number(rating)} />;
+  const Rate = isRating && <Rating textColor={textColor} point={rating as number} />;
   const Username = <Text style={usernameStyles}>{mapNextLine(username)}</Text>;
 
   const AvatarView = (
