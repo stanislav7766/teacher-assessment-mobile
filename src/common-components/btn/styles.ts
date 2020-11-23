@@ -16,6 +16,8 @@ export const btnDefaultSize = {
   height: 50,
 };
 
+export const backgroundColorDefalt: string = ACCENT_COLOR_BLUE;
+
 export const styles = StyleSheet.create<Styles>({
   container: {
     ...btnDefaultSize,
