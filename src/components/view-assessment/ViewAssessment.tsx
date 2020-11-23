@@ -1,7 +1,7 @@
 import React, {useState, useRef, useMemo, useCallback, useEffect} from 'react';
 import {Animated, View, Text, TouchableOpacity, LayoutChangeEvent} from 'react-native';
 import Form from '@common-components/form';
-import useAnimatedHeight from '@hooks/use-animated-height';
+import useAnimated from '@hooks/use-animated';
 import AssessmentHeader from '@components/assessment-header';
 import {DEFAULT_INDENT} from '@constants/indent';
 import {randomID} from '@utils/random-id';
@@ -20,17 +20,17 @@ const ViewAssessment = ({rating, review, withTeacher, username, avatar, QAs}: IV
   const [QAParams, setQARef] = useState(defaultParams.QAParams);
   const [assessmentParams] = useState(defaultParams.assessmentParams);
 
-  const [animReviewHeight, compositeAnimationReview] = useAnimatedHeight({
-    minHeight: reviewParams.minHeight,
-    maxHeight: reviewParams.maxHeight,
+  const [animReviewHeight, compositeAnimationReview] = useAnimated({
+    from: reviewParams.minHeight,
+    to: reviewParams.maxHeight,
   });
-  const [animQAHeight, compositeAnimationQA] = useAnimatedHeight({
-    minHeight: QAParams.minHeight,
-    maxHeight: QAParams.maxHeight,
+  const [animQAHeight, compositeAnimationQA] = useAnimated({
+    from: QAParams.minHeight,
+    to: QAParams.maxHeight,
   });
-  const [animAssessmentHeight, compositeAnimationAssessment] = useAnimatedHeight({
-    minHeight: assessmentParams.minHeight,
-    maxHeight: assessmentParams.minHeight + reviewParams.maxHeight + QAParams.maxHeight + DEFAULT_INDENT * 2,
+  const [animAssessmentHeight, compositeAnimationAssessment] = useAnimated({
+    from: assessmentParams.minHeight,
+    to: assessmentParams.minHeight + reviewParams.maxHeight + QAParams.maxHeight + DEFAULT_INDENT * 2,
   });
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -44,10 +44,12 @@ const ViewAssessment = ({rating, review, withTeacher, username, avatar, QAs}: IV
   };
 
   useEffect(() => {
+    const toValue: number = isExpanded ? 1 : 0;
+    const duration: number = 400;
     runParalel([
-      compositeAnimationReview(isExpanded ? 1 : 0),
-      compositeAnimationQA(isExpanded ? 1 : 0),
-      compositeAnimationAssessment(isExpanded ? 1 : 0),
+      compositeAnimationReview({toValue, duration}),
+      compositeAnimationQA({toValue, duration}),
+      compositeAnimationAssessment({toValue, duration}),
     ]);
   }, [isExpanded, compositeAnimationReview, compositeAnimationQA, compositeAnimationAssessment]);
 
