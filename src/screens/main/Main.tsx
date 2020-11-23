@@ -3,10 +3,12 @@ import {View, Text, ViewStyle, TextStyle, StyleSheet, ScrollView} from 'react-na
 import MenuDrawer from '@common-components/menu-drawer';
 import Header from '@components/header';
 import {IOnPress, ISvgFactoryParams} from 'types/common';
-import {ACCENT_COLOR_BLUE} from '@constants/colors';
+import {ACCENT_COLOR_BLUE, ACCENT_COLOR_RED} from '@constants/colors';
 import {WIDTH_SCREEN} from '@constants/dimesions';
 import useSvgFactory from '@hooks/use-svg-factory';
 import getBin from '@assets/svg-ts/trash-bin';
+import Window from '@components/window';
+import WheelPicker from '@common-components/wheel-picker';
 import ViewAssessment from '@components/view-assessment';
 import FillAssessment from '@components/fill-assessment';
 import {styles as layoutStyles} from '@common-styles/layout';
@@ -15,6 +17,15 @@ import UserItem from '@components/user-item';
 import {DEFAULT_INDENT} from '@constants/indent';
 import {isTablet} from '@utils/isTablet';
 import {styles} from './styles';
+
+const faculties = [
+  {label: 'ПБФ', value: 'ПБФ'},
+  {label: 'ФІОТ', value: 'ФІОТ'},
+  {label: 'РТФ', value: 'РТФ'},
+  {label: 'ІТФ', value: 'ІТФ'},
+  {label: 'ІХВ', value: 'ІХВ'},
+  {label: 'ПСФ', value: 'ПСФ'},
+];
 
 const QAs = [
   {
@@ -73,9 +84,12 @@ const svgFactoryParams: ISvgFactoryParams = {width: 20, height: 20};
 
 const Main: React.FC = () => {
   const [shownMenu, setShownMenu] = useState(false);
+  const [showWindow, setShowWindow] = useState(false);
   const [review, setReview] = useState('');
   const [QAAnswers, setQAAnswers] = useState(QAsAnswer);
   const [scrollEnabled, setScrollEnabled] = useState(true);
+
+  const [selectedFaculty, setSelectedFaculty] = useState('ФІОТ');
 
   const updateAnswers = (No: number, answer: number): void => {
     const copy = [...QAAnswers];
@@ -86,8 +100,20 @@ const Main: React.FC = () => {
   const onPress: IOnPress = (): void => {
     setShownMenu(!shownMenu);
   };
+  const closeWindow: IOnPress = (): void => {
+    setShowWindow(false);
+  };
 
-  const Btt = <Btn onPress={onPress} height={40} width={WIDTH_SCREEN / 3} title="Переглянути сторінку" />;
+  const Btt = (
+    <Btn
+      onPress={(): void => {
+        setShowWindow(true);
+      }}
+      height={40}
+      width={WIDTH_SCREEN / 3}
+      title="Переглянути сторінку"
+    />
+  );
   const DrawerContent = (
     <View style={drawerStyles.drawer}>
       <View style={row}>
@@ -96,6 +122,19 @@ const Main: React.FC = () => {
     </View>
   );
   const BinSvg = useSvgFactory(getBin, svgFactoryParams);
+
+  const Picker = (
+    <WheelPicker
+      textStyle={{color: ACCENT_COLOR_BLUE}}
+      backgroundColor="#fff"
+      sizes={{width: 100, height: 200, itemHeight: 40}}
+      items={faculties}
+      selectedValue={selectedFaculty}
+      onValueChange={(value: string): void => {
+        setSelectedFaculty(value);
+      }}
+    />
+  );
 
   return (
     <>
@@ -171,6 +210,20 @@ const Main: React.FC = () => {
           )}
         </ScrollView>
       </MenuDrawer>
+      {showWindow && (
+        <Window
+          opacity={0.35}
+          preset="check"
+          closeWindow={closeWindow}
+          backgroundColor={ACCENT_COLOR_BLUE}
+          width={WIDTH_SCREEN * 0.8}
+        >
+          {Picker}
+          {/* <View style={[centerXY, {height: 100}]}>
+            <Text>Are you sure</Text>
+          </View> */}
+        </Window>
+      )}
     </>
   );
 };
