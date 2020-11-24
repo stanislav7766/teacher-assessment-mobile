@@ -49,5 +49,5 @@ const FLEX_RATING = 0.25;
 export const getFlexValues = (mode: 'teacher-rating' | 'teacher' | 'rating'): IOutputFlexes => ({
   flexAvatar: {flex: FLEX_AVATAR},
   flexRating: {flex: FLEX_RATING},
-  flexUsername: {flex: mode === 'teacher-rating' ? 1 - FLEX_AVATAR - FLEX_AVATAR : 1 - FLEX_AVATAR + FLEX_RATING},
+  flexUsername: {flex: mode === 'teacher-rating' ? 1 - FLEX_AVATAR : 1 - FLEX_AVATAR + FLEX_RATING},
 });
