@@ -23,37 +23,57 @@ const closeSvgParams: ISvgFactoryParams = {
   fillAccent: ACCENT_COLOR_RED,
 };
 
-type IBottom = 'bottom';
-type IHeader = 'close' | 'check';
+export type IFooter = 'footer';
+export type IHeader = 'close' | 'check';
 
 declare interface IWindowProps {
   children: ReactNode;
   backgroundColor: string;
   width: number;
   opacity: number;
-  preset: 'check' | 'close' | 'bottom';
+  preset: 'check' | 'close' | 'footer';
   closeWindow: () => void;
+  onBottomYes?: () => void;
+  onBottomNo?: () => void;
 }
 
-const Window = ({children, backgroundColor, opacity, width, preset, closeWindow}: IWindowProps) => {
+const Window = ({
+  children,
+  backgroundColor,
+  opacity,
+  width,
+  preset,
+  closeWindow,
+  onBottomYes,
+  onBottomNo,
+}: IWindowProps) => {
   const [animMaskOpacity, compositeAnimationMask] = useAnimated({from: 0, to: opacity});
   const [animWindowOpacity, compositeAnimationWindow] = useAnimated({from: 0, to: 1});
-  const isBottomPreset = preset === 'bottom';
+  const isBottomPreset = preset === 'footer';
 
   const close = (): void => {
     const toValue: number = 0;
     runParalel([compositeAnimationWindow({toValue, duration: 100}), compositeAnimationMask({toValue})], closeWindow);
   };
 
-  const RenderBottom = (type: IBottom): JSX.Element =>
+  const onBottomYesHandler = (): void => {
+    close();
+    onBottomYes?.();
+  };
+  const onBottomNoHandler = (): void => {
+    close();
+    onBottomNo?.();
+  };
+
+  const RenderBottom = (type: IFooter): JSX.Element =>
     ({
-      bottom: (
+      footer: (
         <>
           <View style={[col, left]}>
-            <Btn onPress={close} width={60} height={30} title="Так" />
+            <Btn onPress={onBottomYesHandler} width={60} height={30} title="Так" />
           </View>
           <View style={[col, right]}>
-            <Btn backgroundColor={ACCENT_COLOR_RED} onPress={close} width={60} height={30} title="Ні" />
+            <Btn backgroundColor={ACCENT_COLOR_RED} onPress={onBottomNoHandler} width={60} height={30} title="Ні" />
           </View>
         </>
       ),
@@ -81,11 +101,16 @@ const Window = ({children, backgroundColor, opacity, width, preset, closeWindow}
             </TouchableOpacity>
           )}
           <Animated.View style={[styles.children]}>{children}</Animated.View>
-          {isBottomPreset && <View style={[styles.bottom]}>{RenderBottom(preset as IBottom)}</View>}
+          {isBottomPreset && <View style={[styles.bottom]}>{RenderBottom(preset as IFooter)}</View>}
         </Form>
       </View>
     </Animated.View>
   );
+};
+
+Window.defaultProps = {
+  onBottomYes: (): void => {},
+  onBottomNo: (): void => {},
 };
 
 export default Window;
