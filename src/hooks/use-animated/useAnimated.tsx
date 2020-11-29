@@ -1,4 +1,3 @@
-//eslint propblem incompatible with ts version
 import {useRef, useMemo} from 'react';
 import {Animated} from 'react-native';
 
