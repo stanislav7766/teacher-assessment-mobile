@@ -92,12 +92,13 @@ const MenuDrawer = ({
     [DRAWER_WIDTH, open, paddingGesture, position],
   );
   const maskRef = useRef<View | null>(null);
-  const inGestured = useRef<boolean>(false);
   const [drawerOffset] = useState(new Animated.Value(open ? config.opened : config.closed));
 
   const updateNativeStyles = (dx: number): void => {
     const value = config.calcOpacity(dx, opacity);
-    maskRef.current && maskRef.current.setNativeProps({backgroundColor, opacity: value >= opacity ? opacity : value});
+    const inBounds: boolean = config.inBounds(dx);
+    const zIndex: number = inBounds ? 100 : 0;
+    maskRef?.current?.setNativeProps({zIndex, backgroundColor, opacity: value >= opacity ? opacity : value});
   };
   const chooseOnPaddingGesture = (needDisablingScroll: 'enable' | 'disable') => {
     needDisablingScroll === 'disable' && onPaddingGestureStart && onPaddingGestureStart();
@@ -113,17 +114,12 @@ const MenuDrawer = ({
     };
   });
 
-  const animateDrawer = (
-    animated: Animated.Value,
-    {toValue, duration, useNativeDriver, cb}: IAnimatedOptions,
-  ): void => {
+  const animateDrawer = (animated: Animated.Value, {toValue, duration, useNativeDriver}: IAnimatedOptions): void => {
     Animated.timing(animated, {
       toValue,
       duration,
       useNativeDriver,
-    }).start(() => {
-      cb?.();
-    });
+    }).start();
   };
 
   const shouldContinueGestureStart = (): boolean => open;
@@ -160,9 +156,7 @@ const MenuDrawer = ({
     shouldContinueGestureMove(e, g);
   const onMoveShouldSetPanResponder = (e: GestureResponderEvent, g: PanResponderGestureState) =>
     shouldContinueGestureMove(e, g);
-  const onPanResponderGrant = () => {
-    inGestured.current = true;
-  };
+
   const panResponder = useMemo(
     () =>
       PanResponder.create({
@@ -172,41 +166,23 @@ const MenuDrawer = ({
         onMoveShouldSetPanResponder,
         onPanResponderMove,
         onPanResponderRelease,
-        onPanResponderGrant,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [open],
   );
 
   const openDrawer = useCallback(() => {
-    inGestured.current = true;
-    animateDrawer(drawerOffset, {
-      toValue: config.opened,
-      duration: animationTime,
-      useNativeDriver: true,
-      cb: (): void => {
-        inGestured.current = false;
-      },
-    });
+    animateDrawer(drawerOffset, {toValue: config.opened, duration: animationTime, useNativeDriver: true});
   }, [config.opened, animationTime, drawerOffset]);
 
   const closeDrawer = useCallback(() => {
-    inGestured.current = true;
-    animateDrawer(drawerOffset, {
-      toValue: config.closed,
-      duration: animationTime,
-      useNativeDriver: true,
-      cb: (): void => {
-        inGestured.current = false;
-      },
-    });
+    animateDrawer(drawerOffset, {toValue: config.closed, duration: animationTime, useNativeDriver: true});
   }, [config.closed, animationTime, drawerOffset]);
 
   useEffect(() => {
     open ? openDrawer() : closeDrawer();
   }, [open, openDrawer, closeDrawer]);
 
-  const maskZindex = {zIndex: inGestured.current || open ? 100 : 0};
   const App = (
     <>
       <Animated.View {...panResponder.panHandlers}>
@@ -217,7 +193,7 @@ const MenuDrawer = ({
         </Animated.View>
         <Animated.View style={[styles.container]}>
           <View
-            style={[styles.mask, maskZindex]}
+            style={[styles.mask]}
             ref={ref => {
               maskRef.current = ref;
             }}

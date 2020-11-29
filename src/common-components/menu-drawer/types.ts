@@ -39,5 +39,4 @@ export declare interface IAnimatedOptions {
   useNativeDriver: boolean;
   duration: number;
   toValue: number;
-  cb?: () => void;
 }
