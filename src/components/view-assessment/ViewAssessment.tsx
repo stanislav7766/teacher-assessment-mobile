@@ -6,7 +6,7 @@ import AssessmentHeader from '@components/assessment-header';
 import {DEFAULT_INDENT} from '@constants/indent';
 import {randomID} from '@utils/random-id';
 import {getNFirstChars} from '@utils/map-text';
-import {runParalel} from '@utils/animations';
+import {runSequence, getParalel} from '@utils/animations';
 import defaultRefParams from './defaultRefParams';
 import QAItem from './QAItem';
 import {getQAOpacity, row, styles} from './styles';
@@ -33,6 +33,11 @@ const ViewAssessment = ({rating, review, withTeacher, username, avatar, QAs}: IV
     to: assessmentParams.minHeight + reviewParams.maxHeight + QAParams.maxHeight + DEFAULT_INDENT * 2,
   });
 
+  const [animQAOpacity, compositeAnimationQAOpacity] = useAnimated({
+    from: 0,
+    to: 1,
+  });
+
   const [isExpanded, setIsExpanded] = useState(false);
 
   const renderReview = () => (!isExpanded ? `${getNFirstChars(review, 15)}...` : review);
@@ -46,12 +51,19 @@ const ViewAssessment = ({rating, review, withTeacher, username, avatar, QAs}: IV
   useEffect(() => {
     const toValue: number = isExpanded ? 1 : 0;
     const duration: number = 400;
-    runParalel([
+    const paralels = getParalel([
       compositeAnimationReview({toValue, duration}),
       compositeAnimationQA({toValue, duration}),
       compositeAnimationAssessment({toValue, duration}),
     ]);
-  }, [isExpanded, compositeAnimationReview, compositeAnimationQA, compositeAnimationAssessment]);
+    runSequence([paralels, compositeAnimationQAOpacity({toValue, duration})]);
+  }, [
+    isExpanded,
+    compositeAnimationReview,
+    compositeAnimationQA,
+    compositeAnimationAssessment,
+    compositeAnimationQAOpacity,
+  ]);
 
   const onHiddenReview = (e: LayoutChangeEvent) => {
     if (review !== reviewRef.current) {
@@ -99,7 +111,9 @@ const ViewAssessment = ({rating, review, withTeacher, username, avatar, QAs}: IV
         />
         <View style={[row, styles.qa, qaOpacity]}>
           <Form backgroundColor="#fff">
-            <Animated.View style={[styles.qaItems, {height: animQAHeight}]}>{renderQAItems()}</Animated.View>
+            <Animated.View style={[styles.qaItems, {height: animQAHeight, opacity: animQAOpacity}]}>
+              {renderQAItems()}
+            </Animated.View>
             {HiddenQA}
           </Form>
         </View>
