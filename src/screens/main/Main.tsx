@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import useMenuDrawer from '@hooks/use-menu-drawer';
 import Header from '@components/header';
@@ -12,6 +12,7 @@ import {styles as layoutStyles} from '@common-styles/layout';
 import Btn from 'common-components/btn';
 import UserItem from '@components/user-item';
 import {DEFAULT_INDENT} from '@constants/indent';
+import {randomID} from '@utils/random-id';
 import {drawerStyles} from './styles';
 
 const QAs = [
@@ -62,8 +63,7 @@ const QAs = [
   },
 ];
 
-const QAQuestions = QAs.map(({answer, ...rest}) => rest);
-const QAsAnswer = QAs.map(({No}) => ({No, answer: 0}));
+const QAsAnswer = QAs.map(({No, question}) => ({No, question, answer: 0, id: randomID()}));
 
 const {row} = layoutStyles;
 
@@ -73,12 +73,6 @@ const Main = () => {
   const [review, setReview] = useState('');
   const [QAAnswers, setQAAnswers] = useState(QAsAnswer);
   const [scrollEnabled, setScrollEnabled] = useState(true);
-
-  const updateAnswers = (No: number, answer: number): void => {
-    const copy = [...QAAnswers];
-    copy[No - 1] = {No, answer};
-    setQAAnswers(copy);
-  };
 
   const BinSvg = useSvgFactory(getBin, svgFactoryParams);
   const Btt = <Btn onPress={(): void => {}} height={40} width={WIDTH_SCREEN / 3} title="Переглянути сторінку" />;
@@ -91,58 +85,43 @@ const Main = () => {
     </View>
   );
 
+  const onChangeAnswers = useCallback((No: number, answer: number) => {
+    setQAAnswers(old => {
+      const index = old.findIndex(val => val.No === No);
+      const copy = [...old];
+      copy[index].answer = answer;
+      return copy;
+    });
+  }, []);
+
   const App = (
     <>
       <ScrollView scrollEnabled={scrollEnabled} style={{marginTop: 50 + DEFAULT_INDENT}}>
-        {useMemo(
-          () => (
-            <View style={[row, {marginTop: DEFAULT_INDENT}]}>
-              <UserItem
-                rating={4.7}
-                userRole="Студент"
-                DeleteUser={BinSvg}
-                mode="full"
-                Btn={Btt}
-                username="Шимсединов Тимур Гафарович"
-              />
-            </View>
-          ),
-          [BinSvg, Btt],
-        )}
-        {useMemo(
-          () => (
-            <View style={[row, {marginTop: DEFAULT_INDENT}]}>
-              <FillAssessment
-                username="Шемсединов Тимур Гафарович"
-                answers={QAAnswers}
-                questions={QAQuestions}
-                review={review}
-                updateReview={setReview}
-                updateAnswers={updateAnswers}
-              />
-            </View>
-          ),
-          [QAAnswers, QAQuestions, review],
-        )}
-        {useMemo(
-          () => (
-            <>
-              <View style={[row, {marginTop: DEFAULT_INDENT}]}>
-                <ViewAssessment
-                  QAs={QAs}
-                  withTeacher
-                  username="Шемсединов Тимур Гафарович"
-                  review={review}
-                  rating={4.7}
-                />
-              </View>
-              <View style={[row, {marginBottom: DEFAULT_INDENT, marginTop: DEFAULT_INDENT}]}>
-                <ViewAssessment QAs={QAs} withTeacher={false} review={review} rating={4.7} />
-              </View>
-            </>
-          ),
-          [review],
-        )}
+        <View style={[row, {marginTop: DEFAULT_INDENT}]}>
+          <UserItem
+            rating={4.7}
+            userRole="Студент"
+            DeleteUser={BinSvg}
+            mode="full"
+            Btn={Btt}
+            username="Шимсединов Тимур Гафарович"
+          />
+        </View>
+        <View style={[row, {marginTop: DEFAULT_INDENT}]}>
+          <FillAssessment
+            username="Шемсединов Тимур Гафарович"
+            QAs={QAAnswers}
+            review={review}
+            updateReview={setReview}
+            updateQAs={onChangeAnswers}
+          />
+        </View>
+        <View style={[row, {marginTop: DEFAULT_INDENT}]}>
+          <ViewAssessment QAs={QAs} withTeacher username="Шемсединов Тимур Гафарович" review={review} rating={4.7} />
+        </View>
+        <View style={[row, {marginBottom: DEFAULT_INDENT, marginTop: DEFAULT_INDENT}]}>
+          <ViewAssessment QAs={QAs} withTeacher={false} review={review} rating={4.7} />
+        </View>
       </ScrollView>
     </>
   );

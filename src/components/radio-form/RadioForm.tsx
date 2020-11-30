@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {memo, ReactNode} from 'react';
 import {View, Text} from 'react-native';
 import RadioBtn from '@common-components/radio-btn';
 import {randomID} from '@utils/random-id';
@@ -23,5 +23,7 @@ declare interface IRadioFormProps {
   selectedValue: number;
   onPress: (value: number) => void;
 }
+const propsEqual = (prevProps: IRadioFormProps, nextProps: IRadioFormProps) =>
+  JSON.stringify(prevProps) === JSON.stringify(nextProps);
 
-export default RadioForm;
+export default memo(RadioForm, propsEqual);

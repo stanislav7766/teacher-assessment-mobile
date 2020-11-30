@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, Text, TextInput} from 'react-native';
 import Form from '@common-components/form';
 import AssessmentHeader from '@components/assessment-header';
 import RadioForm from '@components/radio-form';
-import {randomID} from '@utils/random-id';
 import QAItem from './QAItem';
 import {row, styles} from './styles';
 
@@ -16,35 +15,26 @@ const renderRadioProps = (
 
 declare interface IFillAssessmentProps {
   review: string;
-  questions: Array<{No: number; question: string}>;
-  answers: Array<{No: number; answer: number}>;
+  QAs: Array<{No: number; answer: number; question: string; id: string}>;
   updateReview: (text: string) => void;
-  updateAnswers: (No: number, answer: number) => void;
+  updateQAs: (No: number, answer: number) => void;
   username?: string;
   avatar?: string;
 }
 
-const FillAssessment = ({
-  review,
-  updateReview,
-  updateAnswers,
-  questions,
-  answers,
-  username,
-  avatar,
-}: IFillAssessmentProps) => {
-  const QAItems = questions.map(({No, question}, i) => {
+const FillAssessment = ({review, updateReview, updateQAs, QAs, username, avatar}: IFillAssessmentProps) => {
+  const onChangeQAs = useCallback(
+    (No: number) => (value: number) => {
+      updateQAs(No, value);
+    },
+    [updateQAs],
+  );
+
+  const QAItems = QAs.map(({id, No, question, answer}) => {
     const Answer = (
-      <RadioForm
-        size={15}
-        radioProps={renderRadioProps(5)}
-        selectedValue={answers[i].answer}
-        onPress={(value: number): void => {
-          updateAnswers(No, value);
-        }}
-      />
+      <RadioForm size={15} radioProps={renderRadioProps(5)} selectedValue={answer} onPress={onChangeQAs(No)} />
     );
-    return <QAItem key={randomID()} {...{No, question, Answer}} />;
+    return <QAItem key={id} {...{No, question, Answer}} />;
   });
 
   return (

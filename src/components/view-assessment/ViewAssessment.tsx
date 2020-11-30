@@ -1,4 +1,4 @@
-import React, {useState, useRef, useMemo, useCallback, useEffect} from 'react';
+import React, {memo, useState, useRef, useMemo, useCallback, useEffect} from 'react';
 import {Animated, View, Text, TouchableOpacity, LayoutChangeEvent} from 'react-native';
 import Form from '@common-components/form';
 import useAnimated from '@hooks/use-animated';
@@ -145,4 +145,4 @@ declare interface IViewAssessmentProps {
   QAs: Array<{No: number; question: string; answer: number}>;
 }
 
-export default ViewAssessment;
+export default memo(ViewAssessment);
