@@ -3,6 +3,8 @@ import {View, Text, ScrollView} from 'react-native';
 import useMenuDrawer from '@hooks/use-menu-drawer';
 import Header from '@components/header';
 import {ISvgFactoryParams} from 'types/common';
+import UniversityPreview from '@components/university-preview';
+import UniverityItem from '@components/university-item';
 import {WIDTH_SCREEN} from '@constants/dimesions';
 import useSvgFactory from '@hooks/use-svg-factory';
 import getBin from '@assets/svg-ts/trash-bin';
@@ -97,6 +99,20 @@ const Main = () => {
   const App = (
     <>
       <ScrollView scrollEnabled={scrollEnabled} style={{marginTop: 50 + DEFAULT_INDENT}}>
+        <View style={[row, {marginTop: DEFAULT_INDENT}]}>
+          <UniversityPreview
+            preview="https://strana.ua/img/article/1262/5_main-v1551691292.jpeg"
+            name="Национальный медицинский университет имени А. А. Богомольца"
+          />
+        </View>
+        <View style={[row, {marginTop: DEFAULT_INDENT}]}>
+          <UniverityItem
+            onPress={() => {}}
+            rating={4.6}
+            preview="https://strana.ua/img/article/1262/5_main-v1551691292.jpeg"
+            name="Национальный медицинский университет имени А. А. Богомольца"
+          />
+        </View>
         <View style={[row, {marginTop: DEFAULT_INDENT}]}>
           <UserItem
             rating={4.7}
