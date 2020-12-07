@@ -1,4 +1,4 @@
-import {useRef, useMemo} from 'react';
+import {useRef} from 'react';
 import {Animated} from 'react-native';
 
 declare interface IParams {
@@ -10,18 +10,10 @@ const useAnimated = ({
   from,
   to,
 }: IParams): [
-  Animated.AnimatedInterpolation,
+  Animated.AnimatedValue,
   (params: {toValue: number; duration?: number; useNativeDriver?: boolean}) => Animated.CompositeAnimation,
 ] => {
   const anim = useRef(new Animated.Value(from));
-  const interpolatedAnim = useMemo(
-    () =>
-      anim.current.interpolate({
-        inputRange: [0, 1],
-        outputRange: [from, to],
-      }),
-    [from, to],
-  );
 
   const compositeAnimation = (params: {
     toValue: number;
@@ -29,12 +21,12 @@ const useAnimated = ({
     useNativeDriver?: boolean;
   }): Animated.CompositeAnimation =>
     Animated.timing(anim.current, {
-      toValue: params.toValue,
+      toValue: params.toValue === 0 ? from : to,
       duration: params.duration || 250,
       useNativeDriver: params.useNativeDriver || false,
     });
 
-  return [interpolatedAnim, compositeAnimation];
+  return [anim.current, compositeAnimation];
 };
 
 export default useAnimated;
