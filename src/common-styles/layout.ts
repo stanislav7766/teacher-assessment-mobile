@@ -9,6 +9,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   mx0: {marginLeft: 0, marginRight: 0},
+  myTop: {marginTop: DEFAULT_INDENT},
+  myBottom: {marginBottom: DEFAULT_INDENT},
   row: {
     marginRight: DEFAULT_INDENT,
     marginLeft: DEFAULT_INDENT,
