@@ -2,6 +2,7 @@ import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {styles as stylesLayout} from '@common-styles/layout';
 
 import {DEFAULT_INDENT} from '@constants/indent';
+import {WIDTH_SCREEN} from '@constants/dimesions';
 
 export const {col, row, right, left, mx0, centerXY} = stylesLayout;
 
@@ -46,3 +47,5 @@ export const styles = StyleSheet.create<Styles>({
   container: {...mx0, width: '100%'},
   avatar: {...left, alignItems: 'center'},
 });
+
+export const btnWidth = Math.min(WIDTH_SCREEN / 3, 130);

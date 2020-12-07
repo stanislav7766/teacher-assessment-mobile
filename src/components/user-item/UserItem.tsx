@@ -1,14 +1,37 @@
 /* eslint-disable global-require */
-import React, {ReactNode, useState, useMemo} from 'react';
+import React, {ReactNode, useState, useMemo, memo} from 'react';
 import {View, Image, Text, LayoutChangeEvent} from 'react-native';
 import Rating from '@common-components/rating';
+import Btn from 'common-components/btn';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import {mapNextLine} from '@utils/map-text';
-import {styles, col, row, right, centerXY, getAvatarStyle, getUsernameStyle, deleteUserPosition} from './styles';
+import {IOnPress} from 'types/common';
+import {
+  styles,
+  col,
+  row,
+  right,
+  centerXY,
+  getAvatarStyle,
+  getUsernameStyle,
+  deleteUserPosition,
+  btnWidth,
+} from './styles';
 
-const UserItem = ({Btn, DeleteUser, rating, username, avatar, textColor, mode, userRole}: IUserItemProps) => {
+const UserItem = ({
+  btnTitle,
+  onPressBtn,
+  DeleteUser,
+  rating,
+  username,
+  avatar,
+  textColor,
+  mode,
+  userRole,
+}: IUserItemProps) => {
   const isFullMode = mode === 'full';
   const isRating = rating !== undefined;
+  const isUserBtn = btnTitle !== undefined && onPressBtn !== undefined;
 
   const [avatarWidth, setAvatarWidth] = useState(0);
   const avatarFlexStyle = {flex: isFullMode ? 0.3 : 0.7};
@@ -18,6 +41,10 @@ const UserItem = ({Btn, DeleteUser, rating, username, avatar, textColor, mode, u
   const Avatar = <Image style={avatarStyles} source={avatar ? {uri: avatar} : require('@assets/avatar.png')} />;
   const Rate = isRating && <Rating textColor={textColor} point={rating as number} />;
   const Username = <Text style={usernameStyles}>{mapNextLine(username)}</Text>;
+
+  const UserBtn = isUserBtn && (
+    <Btn onPress={onPressBtn as IOnPress} height={40} width={btnWidth} title={btnTitle as string} />
+  );
 
   const AvatarView = (
     <>
@@ -44,7 +71,7 @@ const UserItem = ({Btn, DeleteUser, rating, username, avatar, textColor, mode, u
       {isFullMode ? (
         <>
           <View style={[col, styles.usernameWrap]}>{Username}</View>
-          <View style={[col, styles.btn]}>{Btn}</View>
+          <View style={[col, styles.btn]}>{UserBtn}</View>
         </>
       ) : (
         <View style={[col]}>{Username}</View>
@@ -71,7 +98,8 @@ const UserItem = ({Btn, DeleteUser, rating, username, avatar, textColor, mode, u
 };
 
 UserItem.defaultProps = {
-  Btn: undefined,
+  onPressBtn: undefined,
+  btnTitle: undefined,
   DeleteUser: undefined,
   rating: undefined,
   avatar: undefined,
@@ -79,7 +107,8 @@ UserItem.defaultProps = {
 };
 
 declare interface IUserItemProps {
-  Btn?: ReactNode;
+  onPressBtn?: () => void;
+  btnTitle?: string;
   DeleteUser?: ReactNode;
   rating?: number;
   username: string;
@@ -90,4 +119,6 @@ declare interface IUserItemProps {
 }
 type Mode = 'full' | 'partial';
 
-export default UserItem;
+const propsEqual = (prevProps: IUserItemProps, nextProps: IUserItemProps) =>
+  JSON.stringify(prevProps) === JSON.stringify(nextProps);
+export default memo(UserItem, propsEqual);
