@@ -16,21 +16,25 @@ const ViewAssessment = ({rating, review, withTeacher, username, avatar, QAs}: IV
 
   const reviewRef = useRef(review);
 
-  const [reviewParams, setReviewRef] = useState(defaultParams.reviewParams);
-  const [QAParams, setQARef] = useState(defaultParams.QAParams);
-  const [assessmentParams] = useState(defaultParams.assessmentParams);
+  const reviewParams = useRef(defaultParams.reviewParams);
+  const QAParams = useRef(defaultParams.QAParams);
+  const assessmentParams = useRef(defaultParams.assessmentParams);
 
   const [animReviewHeight, compositeAnimationReview] = useAnimated({
-    from: reviewParams.minHeight,
-    to: reviewParams.maxHeight,
+    from: reviewParams.current.minHeight,
+    to: reviewParams.current.maxHeight,
   });
   const [animQAHeight, compositeAnimationQA] = useAnimated({
-    from: QAParams.minHeight,
-    to: QAParams.maxHeight,
+    from: QAParams.current.minHeight,
+    to: QAParams.current.maxHeight,
   });
   const [animAssessmentHeight, compositeAnimationAssessment] = useAnimated({
-    from: assessmentParams.minHeight,
-    to: assessmentParams.minHeight + reviewParams.maxHeight + QAParams.maxHeight + DEFAULT_INDENT * 2,
+    from: assessmentParams.current.minHeight,
+    to:
+      assessmentParams.current.minHeight +
+      reviewParams.current.maxHeight +
+      QAParams.current.maxHeight +
+      DEFAULT_INDENT * 2,
   });
 
   const [animQAOpacity, compositeAnimationQAOpacity] = useAnimated({
@@ -68,17 +72,19 @@ const ViewAssessment = ({rating, review, withTeacher, username, avatar, QAs}: IV
   const onHiddenReview = (e: LayoutChangeEvent) => {
     if (review !== reviewRef.current) {
       reviewRef.current = review;
-      setReviewRef({...reviewParams, maxHeight: e.nativeEvent.layout.height, firstSet: false});
+      reviewParams.current = {...reviewParams.current, maxHeight: e.nativeEvent.layout.height, firstSet: false};
       return;
     }
-    reviewParams.firstSet && setReviewRef({...reviewParams, maxHeight: e.nativeEvent.layout.height, firstSet: false});
+    reviewParams.current.firstSet &&
+      (reviewParams.current = {...reviewParams.current, maxHeight: e.nativeEvent.layout.height, firstSet: false});
   };
 
   const onHiddenQA = (e: LayoutChangeEvent) => {
-    QAParams.firstSet && setQARef({...QAParams, firstSet: false, maxHeight: e.nativeEvent.layout.height});
+    QAParams.current.firstSet &&
+      (QAParams.current = {...QAParams.current, firstSet: false, maxHeight: e.nativeEvent.layout.height});
   };
 
-  const HiddenReview = (
+  const HiddenReview = reviewParams.current.firstSet && (
     <View style={[styles.hidden]}>
       <View style={[styles.review]}>
         <Form backgroundColor="#fff">
@@ -89,7 +95,7 @@ const ViewAssessment = ({rating, review, withTeacher, username, avatar, QAs}: IV
       </View>
     </View>
   );
-  const HiddenQA = (
+  const HiddenQA = QAParams.current.firstSet && (
     <View style={[styles.hidden]}>
       <View onLayout={onHiddenQA}>{renderQAItems()}</View>
     </View>
@@ -145,4 +151,7 @@ declare interface IViewAssessmentProps {
   QAs: Array<{No: number; question: string; answer: number}>;
 }
 
-export default memo(ViewAssessment);
+const propsEqual = (prevProps: IViewAssessmentProps, nextProps: IViewAssessmentProps) =>
+  JSON.stringify(prevProps) === JSON.stringify(nextProps);
+
+export default memo(ViewAssessment, propsEqual);
