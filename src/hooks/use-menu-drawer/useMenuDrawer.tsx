@@ -1,22 +1,17 @@
 import React, {useState, ReactNode} from 'react';
 import MenuDrawer from '@common-components/menu-drawer';
+import MenuContent from '@components/menu-content';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import {WIDTH_SCREEN} from '@constants/dimesions';
+import {EasyRouterNavigator} from 'react-native-easy-router';
 import {isTablet} from '@utils/isTablet';
 
 declare interface IParams {
-  onPaddingGestureStart?: () => void;
-  onPaddingGestureEnd?: () => void;
-  MenuContent: JSX.Element;
+  navigator: EasyRouterNavigator;
   children: ReactNode;
 }
 
-const useMenuDrawer = ({
-  MenuContent,
-  children,
-  onPaddingGestureEnd,
-  onPaddingGestureStart,
-}: IParams): [ReactNode, () => void, () => void] => {
+const useMenuDrawer = ({children, navigator}: IParams): [ReactNode, () => void, () => void] => {
   const [shownMenu, setShowMenu] = useState(false);
 
   const onHideMenu = (): void => {
@@ -29,7 +24,7 @@ const useMenuDrawer = ({
   const ShowMenu = (
     <MenuDrawer
       open={shownMenu}
-      menuContent={MenuContent}
+      menuContent={<MenuContent navigator={navigator} />}
       position="right"
       onShowMenu={setShowMenu}
       menuWidth={isTablet() ? 300 : WIDTH_SCREEN * 0.7}
@@ -38,8 +33,6 @@ const useMenuDrawer = ({
       tapToClose
       backgroundColor={ACCENT_COLOR_BLUE}
       opacity={0.35}
-      onPaddingGestureStart={onPaddingGestureStart}
-      onPaddingGestureEnd={onPaddingGestureEnd}
     >
       {children}
     </MenuDrawer>

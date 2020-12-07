@@ -24,7 +24,7 @@ const isIOS = Platform.OS === 'ios';
 
 const isTap = (dx: number, dy: number) => Math.abs(dx) < 1 || Math.abs(dy) < 1;
 const isAllowedSwipe = (dx: number): boolean => Math.abs(dx) >= 0.5 * SCREEN_WIDTH;
-const isVerticalSwipe = (dx: number, dy: number): boolean => dx === 0 || Math.abs(dy) >= Math.abs(dx);
+const isVerticalSwipe = (dx: number, dy: number): boolean => (dx === 0 && dy !== 0) || Math.abs(dy) >= Math.abs(dx);
 
 const getConfigLeft = ({drawerWidth, paddingGesture, open}: IConfigOptions): IConfigOutput => {
   const opened: number = drawerWidth;
@@ -35,6 +35,7 @@ const getConfigLeft = ({drawerWidth, paddingGesture, open}: IConfigOptions): ICo
     closed,
     inPaddingGestureBounds: (offset: number): boolean => !open && offset >= closed && offset <= paddingGesture,
     inBounds: (offset: number): boolean => offset >= paddingGesture && offset <= opened,
+    inDrawerBounds: (offset: number): boolean => offset >= SCREEN_WIDTH - opened && offset <= SCREEN_WIDTH,
     needOpenOrClose: (offset: number): boolean => {
       const needShowMenu = offset > 0 ? 'open' : 'close';
       return needShowMenu === 'open';
@@ -53,6 +54,7 @@ const getConfigRight = ({drawerWidth, paddingGesture, open}: IConfigOptions): IC
     closed,
     inPaddingGestureBounds: (offset: number): boolean => !open && offset >= opened - paddingGesture && offset <= opened,
     inBounds: (offset: number): boolean => offset <= closed - paddingGesture && offset >= opened,
+    inDrawerBounds: (offset: number): boolean => offset >= opened - drawerWidth && offset <= opened,
     needOpenOrClose: (offset: number): boolean => {
       const needShowMenu = offset > 0 ? 'close' : 'open';
       return needShowMenu === 'open';
@@ -82,8 +84,6 @@ const MenuDrawer = ({
   paddingGesture,
   opacity,
   backgroundColor,
-  onPaddingGestureStart,
-  onPaddingGestureEnd,
   onShowMenu,
 }: IMenuDrawerProps) => {
   const DRAWER_WIDTH = menuWidth;
@@ -91,18 +91,19 @@ const MenuDrawer = ({
     () => getConfig(position, {open, paddingGesture, drawerWidth: DRAWER_WIDTH, screenWidth: SCREEN_WIDTH}),
     [DRAWER_WIDTH, open, paddingGesture, position],
   );
+  const [pointerEvents, setPointerEvents] = useState<'auto' | 'none'>('auto');
   const maskRef = useRef<View | null>(null);
   const [drawerOffset] = useState(new Animated.Value(open ? config.opened : config.closed));
 
+  const checkPointerEvents = (allow: boolean): void => {
+    setPointerEvents(allow ? 'none' : 'auto');
+  };
   const updateNativeStyles = (dx: number): void => {
     const value = config.calcOpacity(dx, opacity);
     const inBounds: boolean = config.inBounds(dx);
+    checkPointerEvents(inBounds);
     const zIndex: number = inBounds ? 100 : 0;
     maskRef?.current?.setNativeProps({zIndex, backgroundColor, opacity: value >= opacity ? opacity : value});
-  };
-  const chooseOnPaddingGesture = (needDisablingScroll: 'enable' | 'disable') => {
-    needDisablingScroll === 'disable' && onPaddingGestureStart && onPaddingGestureStart();
-    needDisablingScroll === 'enable' && onPaddingGestureEnd && onPaddingGestureEnd();
   };
 
   useEffect(() => {
@@ -123,35 +124,39 @@ const MenuDrawer = ({
   };
 
   const shouldContinueGestureStart = (): boolean => open;
-  const shouldContinueGestureMove = (_: GestureResponderEvent, {dx, dy, moveX}: PanResponderGestureState): boolean =>
-    !isVerticalSwipe(dx, dy) && config.inPaddingGestureBounds(moveX);
+  const shouldContinueGestureMove = (_: GestureResponderEvent, {dx, dy, moveX}: PanResponderGestureState): boolean => {
+    const allow = !isVerticalSwipe(dx, dy) && config.inPaddingGestureBounds(moveX);
+    checkPointerEvents(allow);
+    return allow;
+  };
 
   const onPanResponderMove = (_: GestureResponderEvent, {dx, moveX}: PanResponderGestureState): void => {
-    chooseOnPaddingGesture('disable');
     const newOffset = config.calcOffset(dx, moveX);
     config.inBounds(newOffset) && animateDrawer(drawerOffset, {toValue: newOffset, duration: 1, useNativeDriver: true});
     Animated.event([null, {dx: drawerOffset}], {useNativeDriver: true});
   };
 
-  const onPanResponderRelease = (_: GestureResponderEvent, {dx, dy}: PanResponderGestureState): void => {
+  const checkTapToClose = (locationX: number): void => {
+    if (!tapToClose || config.inDrawerBounds(locationX)) return;
+    onShowMenu(false);
+  };
+
+  const onPanResponderRelease = ({nativeEvent}: GestureResponderEvent, {dx, dy}: PanResponderGestureState): void => {
     if (isTap(dx, dy)) {
-      tapToClose && onShowMenu(false);
-      tapToClose && chooseOnPaddingGesture('enable');
+      checkTapToClose(nativeEvent.pageX);
       return;
     }
 
     if (isAllowedSwipe(dx)) {
       const needOpen = config.needOpenOrClose(dx);
       onShowMenu(needOpen);
-      chooseOnPaddingGesture(needOpen ? 'disable' : 'enable');
       return;
     }
-    chooseOnPaddingGesture(open ? 'disable' : 'enable');
     const newOffset = open ? config.opened : config.closed;
     animateDrawer(drawerOffset, {toValue: newOffset, duration: animationTime, useNativeDriver: true});
   };
   const onStartShouldSetPanResponder = () => shouldContinueGestureStart();
-  const onStartShouldSetPanResponderCapture = () => shouldContinueGestureStart();
+  const onStartShouldSetPanResponderCapture = () => false;
   const onMoveShouldSetPanResponderCapture = (e: GestureResponderEvent, g: PanResponderGestureState) =>
     shouldContinueGestureMove(e, g);
   const onMoveShouldSetPanResponder = (e: GestureResponderEvent, g: PanResponderGestureState) =>
@@ -198,8 +203,7 @@ const MenuDrawer = ({
               maskRef.current = ref;
             }}
           />
-
-          {children}
+          <View pointerEvents={pointerEvents}>{children}</View>
         </Animated.View>
       </Animated.View>
     </>

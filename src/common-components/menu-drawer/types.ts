@@ -14,8 +14,6 @@ export declare interface IMenuDrawerProps {
   opacity: number;
   backgroundColor: string;
   onShowMenu: (show: boolean) => void;
-  onPaddingGestureStart?: () => void;
-  onPaddingGestureEnd?: () => void;
 }
 export declare interface IPlatformContainerProps {
   children: ReactNode;
@@ -30,6 +28,7 @@ export declare interface IConfigOutput {
   opened: number;
   closed: number;
   inBounds: (offset: number) => boolean;
+  inDrawerBounds: (offser: number) => boolean;
   needOpenOrClose: (offset: number) => boolean;
   inPaddingGestureBounds: (offset: number) => boolean;
   calcOffset: (dx: number, moveX: number) => number;
