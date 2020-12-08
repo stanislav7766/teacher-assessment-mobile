@@ -22,6 +22,8 @@ module.exports = {
           '@assets': './src/assets',
           '@common-components': './src/common-components',
           '@common-styles': './src/common-styles',
+          '@stores': './src/stores',
+          '@api': './src/api',
         },
       },
     ],

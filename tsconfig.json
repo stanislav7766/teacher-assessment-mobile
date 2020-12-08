@@ -54,7 +54,8 @@
       "@assets/*": ["assets/*"],
       "@common-styles/*": ["common-styles/*"],
       "@common-components/*": ["common-components/*"],
-      "types/common": ["types/common.d.ts"]
+      "@stores/*": ["stores/*"],
+      "@api/*": ["api/*"]
     },
 
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
