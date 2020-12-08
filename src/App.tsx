@@ -1,15 +1,18 @@
 import React from 'react';
+import storesConfig from '@config/stores';
+import ComposeStore from '@components/compose-store';
+import UseListenAuth from '@hooks/use-listen-auth';
 import {StatusBar} from 'react-native';
-import Main from '@screens/main';
-import Splash from '@screens/splash';
-import SignIn from '@screens/sign-in';
-import Navigator from 'react-native-easy-router';
+import UseNavigator from '@hooks/use-navigator';
 
-const App: React.FC = () => (
-  <>
-    <StatusBar barStyle="dark-content" />
-    <Navigator screens={{Splash, Main, SignIn}} initialStack="Splash" />
-  </>
-);
+const App: React.FC = () => {
+  return (
+    <>
+      <StatusBar barStyle="dark-content" />
+      <UseNavigator />
+      <UseListenAuth />
+    </>
+  );
+};
 
-export default App;
+export default () => <ComposeStore Child={<App />} wrappers={storesConfig} />;
