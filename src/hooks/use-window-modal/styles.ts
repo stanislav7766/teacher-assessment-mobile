@@ -12,7 +12,7 @@ type Styles = {
 
 export const styles = StyleSheet.create<Styles>({
   pickerText: {color: ACCENT_COLOR_BLUE},
-  windowText: {color: ACCENT_COLOR_BLUE, fontWeight: 'normal', fontSize: 18},
+  windowText: {color: ACCENT_COLOR_BLUE, textAlign: 'center', fontWeight: 'normal', fontSize: 18},
   windowTextWrap: {minHeight: 100, ...centerXY},
 });
 
