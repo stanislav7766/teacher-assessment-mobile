@@ -3,6 +3,8 @@ import SignIn from '@screens/sign-in';
 import Universities from '@screens/universities';
 import University from '@screens/university';
 import Teacher from '@screens/teacher';
+import StudentAssessments from '@screens/student-assessments';
+import LeaveAssessment from '@screens/leave-assessment';
 import {TEACHER, STUDENT, LOCAL_ADMIN, ADMIN} from '@constants/roles';
 import {IRole} from 'types/role';
 
@@ -22,6 +24,8 @@ const TEACHER_SCREENS = {
 const STUDENT_SCREENS = {
   ...SHARED_SCREENS,
   Main: Universities,
+  StudentAssessments,
+  LeaveAssessment,
 };
 const ADMIN_SCREENS = {
   ...SHARED_SCREENS,

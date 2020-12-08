@@ -1,5 +1,5 @@
 import {randomID} from '@utils/random-id';
-import {IReviews, IActiveReviews} from 'types/review';
+import {IReviews, IActiveReviews, ILeavedReviews} from 'types/review';
 
 const QA = [
   {
@@ -70,6 +70,49 @@ export const defaultActiveReviews: IActiveReviews = [
     userId: randomID(),
     QAs: QA,
     username: 'Пупкін Андрій Михайлович',
+  },
+];
+
+export const defaultLeavedReviews: ILeavedReviews = [
+  {
+    id: randomID(),
+    QAs: QA,
+    userId: randomID(),
+    review: `Не очент препод, разачрованы всей группой
+    ddНе очент препод, разачрованы всей группой
+    Не очент препод, разачрованы всей группой`,
+    username: 'Перепечкін Василь Семенович',
+    rating: 4.4,
+  },
+  {
+    id: randomID(),
+    QAs: QA,
+    userId: randomID(),
+    review: `Не очент препод, разачрованы всей группой
+    ddНе очент препод, разачрованы всей группой
+    Не очент препод, разачрованы всей группой`,
+    username: 'Перепечкін Василь Семенович',
+    rating: 4.4,
+  },
+  {
+    id: randomID(),
+    QAs: QA,
+    userId: randomID(),
+    review: `Не очент препод, разачрованы всей группой
+    ddНе очент препод, разачрованы всей группой
+    Не очент препод, разачрованы всей группой`,
+    username: 'Перепечкін Василь Семенович',
+    rating: 4.4,
+  },
+  {
+    id: randomID(),
+    review: `Не очент препод, разачрованы всей группой
+    ddНе очент препод, разачрованы всей группой
+    Не очент препод, разачрованы всей группой`,
+    QAs: QA,
+    userId: randomID(),
+    username: 'Пупкін Андрій Михайлович',
+    rating: 4.2,
   },
 ];
 

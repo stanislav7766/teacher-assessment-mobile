@@ -19,4 +19,15 @@ declare module 'types/review' {
 
   export type IActiveReviews = Array<IActiveReview>;
 
+  export type ILeavedReview = {
+    id: string;
+    QAs: IQAs;
+    userId: string;
+    review: string;
+    username: string;
+    avatar?: string;
+    rating: number;
+  };
+
+  export type ILeavedReviews = Array<ILeavedReview>;
 }
