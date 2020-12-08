@@ -4,9 +4,9 @@ import {defaultUniversities} from './default';
 
 export const fetchUniversities = (): Promise<IResponse<IUniversities>> =>
   new Promise((resolve, _reject) => {
-    const payload = {
+    const response = {
       err: null,
       data: defaultUniversities,
     };
-    setTimeout(() => resolve(payload), 500);
+    setTimeout(() => resolve(response), 500);
   });

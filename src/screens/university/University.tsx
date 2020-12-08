@@ -24,10 +24,11 @@ const Universities = ({navigator, university}: IUniversitiesProps) => {
     onClose: clearResponseError,
     preset: 'close',
   });
+  const {id: universityId} = university;
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    fetchTeachers()
+    fetchTeachers({universityId})
       .then(({err, data}) => {
         err ? setResponseError(err) : setTeachers(data);
       })
@@ -37,7 +38,7 @@ const Universities = ({navigator, university}: IUniversitiesProps) => {
       .finally(() => {
         setRefreshing(false);
       });
-  }, [setResponseError]);
+  }, [setResponseError, universityId]);
 
   useEffect(() => {
     onRefresh();
