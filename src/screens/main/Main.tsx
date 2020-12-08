@@ -5,17 +5,16 @@ import Header from '@components/header';
 import {ISvgFactoryParams} from 'types/common';
 import UniversityPreview from '@components/university-preview';
 import UniverityItem from '@components/university-item';
-import {WIDTH_SCREEN} from '@constants/dimesions';
 import useSvgFactory from '@hooks/use-svg-factory';
 import getBin from '@assets/svg-ts/trash-bin';
 import ViewAssessment from '@components/view-assessment';
 import FillAssessment from '@components/fill-assessment';
 import {styles as layoutStyles} from '@common-styles/layout';
-import Btn from 'common-components/btn';
 import UserItem from '@components/user-item';
 import {DEFAULT_INDENT} from '@constants/indent';
 import {randomID} from '@utils/random-id';
-import {drawerStyles} from './styles';
+import {useAuth} from '@stores/auth';
+import {EasyRouterNavigator} from 'react-native-easy-router';
 
 const QAs = [
   {
@@ -71,21 +70,15 @@ const {row} = layoutStyles;
 
 const svgFactoryParams: ISvgFactoryParams = {width: 20, height: 20};
 
-const Main = () => {
+const Main = ({navigator}: {navigator: EasyRouterNavigator}) => {
+  const auth = useAuth();
   const [review, setReview] = useState('');
   const [QAAnswers, setQAAnswers] = useState(QAsAnswer);
-  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   const BinSvg = useSvgFactory(getBin, svgFactoryParams);
-  const Btt = <Btn onPress={(): void => {}} height={40} width={WIDTH_SCREEN / 3} title="Переглянути сторінку" />;
-
-  const DrawerContent = (
-    <View style={drawerStyles.drawer}>
-      <View style={row}>
-        <UserItem mode="partial" userRole="Студент" textColor="white" username="Шимсединов Тимур Гафарович" />
-      </View>
-    </View>
-  );
+  const onBtt = (): void => {
+    auth.setAuth(false);
+  };
 
   const onChangeAnswers = useCallback((No: number, answer: number) => {
     setQAAnswers(old => {
@@ -98,7 +91,7 @@ const Main = () => {
 
   const App = (
     <>
-      <ScrollView scrollEnabled={scrollEnabled} style={{marginTop: 50 + DEFAULT_INDENT}}>
+      <ScrollView style={{marginTop: 50 + DEFAULT_INDENT}}>
         <View style={[row, {marginTop: DEFAULT_INDENT}]}>
           <UniversityPreview
             preview="https://strana.ua/img/article/1262/5_main-v1551691292.jpeg"
@@ -119,7 +112,8 @@ const Main = () => {
             userRole="Студент"
             DeleteUser={BinSvg}
             mode="full"
-            Btn={Btt}
+            btnTitle="Переглянути сторінку"
+            onPressBtn={onBtt}
             username="Шимсединов Тимур Гафарович"
           />
         </View>
@@ -142,16 +136,7 @@ const Main = () => {
     </>
   );
 
-  const [ShowMenu, onShowMenu] = useMenuDrawer({
-    MenuContent: DrawerContent,
-    children: App,
-    onPaddingGestureStart: (): void => {
-      setScrollEnabled(false);
-    },
-    onPaddingGestureEnd: (): void => {
-      setScrollEnabled(true);
-    },
-  });
+  const [ShowMenu, onShowMenu] = useMenuDrawer({children: App, navigator});
 
   return (
     <>
