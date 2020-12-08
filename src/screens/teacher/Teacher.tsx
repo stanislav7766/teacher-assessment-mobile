@@ -6,11 +6,11 @@ import {EasyRouterNavigator} from 'react-native-easy-router';
 import {ITeacher} from 'types/teacher';
 import useError from '@hooks/use-error';
 import {useModalHeader as useModalError} from '@hooks/use-window-modal';
-import {IReviews} from 'types/review';
+import {IActiveReview, IReviews} from 'types/review';
 import {observer} from 'mobx-react-lite';
 import {useUser} from '@stores/user';
 import {STUDENT} from '@constants/roles';
-import {fetchReviews} from '@api/review';
+import {fetchReviews, fetchActiveReview} from '@api/review';
 import {ERROR_OCCURRED} from '@constants/errors';
 import TeacherView from './Teacher.view';
 
@@ -28,9 +28,10 @@ const Teacher = ({navigator, teacher}: ITeachersProps) => {
     preset: 'close',
   });
 
+  const {id: teacherId} = teacher;
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    fetchReviews()
+    fetchReviews({teacherId})
       .then(({err, data}) => {
         err ? setResponseError(err) : setReviews(data);
       })
@@ -40,17 +41,39 @@ const Teacher = ({navigator, teacher}: ITeachersProps) => {
       .finally(() => {
         setRefreshing(false);
       });
-  }, [setResponseError]);
+  }, [setResponseError, teacherId]);
 
   useEffect(() => {
     onRefresh();
   }, [onRefresh]);
 
   const {user} = useUser();
+  const userId = user.id as string;
   const isAllowLeaveReview = user.role === STUDENT;
 
+  const toLeaveAssessment = useCallback(
+    (activeReview: IActiveReview): void => {
+      navigator.push('LeaveAssessment', {activeReview}, {animation: 'fade'});
+    },
+    [navigator],
+  );
+
+  const onActiveReview = useCallback(() => {
+    setRefreshing(true);
+    fetchActiveReview({userId, teacherId})
+      .then(({err, data}) => {
+        err ? setResponseError(err) : toLeaveAssessment(data[0]);
+      })
+      .catch(_ => {
+        setResponseError(ERROR_OCCURRED);
+      })
+      .finally(() => {
+        setRefreshing(false);
+      });
+  }, [setResponseError, teacherId, toLeaveAssessment, userId]);
+
   const onLeaveReview = (): void => {
-    navigator.push('LeaveReview', {teacher}, {animation: 'fade'});
+    onActiveReview();
   };
 
   const onBack = (): void => {

@@ -1,51 +1,75 @@
 import {randomID} from '@utils/random-id';
-import {IReviews} from 'types/review';
+import {IReviews, IActiveReviews} from 'types/review';
 
 const QA = [
   {
     No: 1,
     question: 'Доступність матеріалу',
-    answer: 4,
+    answer: 0,
+    id: randomID(),
   },
   {
     No: 2,
     question: 'Пояснення важких тем',
-    answer: 4,
+    answer: 0,
+    id: randomID(),
   },
   {
     No: 3,
     question: 'Дискусія',
-    answer: 4,
+    answer: 0,
+    id: randomID(),
   },
   {
     No: 4,
     question: 'Чіткість дикції, нормальний темп викладу',
-    answer: 4,
+    answer: 0,
+    id: randomID(),
   },
   {
     No: 5,
     question: 'Актуальність матеріалу',
-    answer: 4,
+    answer: 0,
+    id: randomID(),
   },
   {
     No: 6,
     question: 'Вимогливість',
-    answer: 4,
+    answer: 0,
+    id: randomID(),
   },
   {
     No: 7,
     question: 'Заохочення студентів',
-    answer: 4,
+    answer: 0,
+    id: randomID(),
   },
   {
     No: 8,
     question: "Об'єктивність оцінювання",
-    answer: 4,
+    answer: 0,
+    id: randomID(),
   },
   {
     No: 9,
     question: 'Шанобливе ставлення до студентів',
-    answer: 4,
+    answer: 0,
+    id: randomID(),
+  },
+];
+
+export const defaultActiveReviews: IActiveReviews = [
+  {
+    id: randomID(),
+    userId: randomID(),
+    QAs: QA,
+    username: 'Перепечкін Василь Семенович',
+  },
+  {
+    id: randomID(),
+    userId: randomID(),
+    QAs: QA,
+    username: 'Пупкін Андрій Михайлович',
   },
 ];
 
