@@ -1,11 +1,15 @@
-import Main from '@screens/main';
 import Splash from '@screens/splash';
 import SignIn from '@screens/sign-in';
+import Universities from '@screens/universities';
+import University from '@screens/university';
+import Teacher from '@screens/teacher';
 import {TEACHER, STUDENT, LOCAL_ADMIN, ADMIN} from '@constants/roles';
 import {IRole} from 'types/role';
 
 const SHARED_SCREENS = {
   Initial: Splash,
+  University,
+  Teacher,
 };
 const GUEST_SCREENS = {
   Main: SignIn,
@@ -13,19 +17,19 @@ const GUEST_SCREENS = {
 };
 const TEACHER_SCREENS = {
   ...SHARED_SCREENS,
-  Main,
+  Main: Universities,
 };
 const STUDENT_SCREENS = {
   ...SHARED_SCREENS,
-  Main,
+  Main: Universities,
 };
 const ADMIN_SCREENS = {
   ...SHARED_SCREENS,
-  Main,
+  Main: Universities,
 };
 const LOCAL_ADMIN_SCREENS = {
   ...SHARED_SCREENS,
-  Main,
+  Main: Universities,
 };
 
 export const getScreens = (role: IRole | undefined) => {
