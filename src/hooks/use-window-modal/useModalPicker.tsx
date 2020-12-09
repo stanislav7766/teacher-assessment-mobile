@@ -3,6 +3,7 @@ import WheelPicker from '@common-components/wheel-picker';
 import Window from '@components/window';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import {WIDTH_SCREEN} from '@constants/dimesions';
+import {isEmptyString} from '@utils/validation/isEmpty';
 import {styles, pickerSizes} from './styles';
 
 declare interface IParams {
@@ -19,7 +20,7 @@ const useModalPicker = ({
 }: IParams): [ReactNode, () => void, () => void] => {
   const [shownWindow, setShowWindow] = useState(false);
 
-  const [{value: firstItem}] = pickerItems;
+  const firstItem = pickerItems[0]?.value ?? '';
   const [selectedItem, setSelectedItem] = useState<string>(firstItem);
 
   const Picker = (
@@ -43,7 +44,9 @@ const useModalPicker = ({
   };
 
   const closeWindow = (): void => {
-    !isItemInArray(selectedItems, selectedItem) && setSelectedItems([...selectedItems, selectedItem]);
+    !isItemInArray(selectedItems, selectedItem) &&
+      !isEmptyString(selectedItem) &&
+      setSelectedItems([...selectedItems, selectedItem]);
     onHideWindow();
   };
 
