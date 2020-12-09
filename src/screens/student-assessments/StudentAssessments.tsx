@@ -27,7 +27,7 @@ const StudentAssessments = ({navigator}: IUniversitiesProps) => {
   });
 
   const {user} = useUser();
-  const studentId = user.id as string;
+  const {id: studentId} = user;
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchStudentReviews({studentId})

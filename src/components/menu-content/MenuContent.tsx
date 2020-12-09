@@ -38,7 +38,7 @@ const MenuContent = ({navigator}: IMenuContentProps) => {
         userRole={userRole}
         textColor="white"
         rating={user.rating}
-        username={user.username || ''}
+        username={user.username}
       />
     </View>
   );

@@ -36,7 +36,7 @@ const LOCAL_ADMIN_SCREENS = {
   Main: Universities,
 };
 
-export const getScreens = (role: IRole | undefined) => {
+export const getScreens = (role: IRole) => {
   const screens = {
     '': GUEST_SCREENS,
     [TEACHER]: TEACHER_SCREENS,
@@ -44,5 +44,5 @@ export const getScreens = (role: IRole | undefined) => {
     [ADMIN]: ADMIN_SCREENS,
     [LOCAL_ADMIN]: LOCAL_ADMIN_SCREENS,
   };
-  return {initial: 'Initial', screens: screens[role ?? '']};
+  return {initial: 'Initial', screens: screens[role]};
 };

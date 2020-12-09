@@ -15,9 +15,7 @@ const STUDENT_LINKS: Links = [
 ];
 const ADMIN_LINKS: Links = [
   {link: 'Головна', screen: 'Main'},
-  {link: 'Додати керуючих', screen: 'AddLocalAdmin'},
-  {link: 'Додати факультет', screen: 'AddFaculty'},
-  {link: 'Додати групу', screen: 'AddGroup'},
+  {link: 'Додати керуючих', screen: 'LocalAdmins'},
   {link: 'Експорт даних', screen: 'ExportData'},
 ];
 const LOCAL_ADMIN_LINKS: Links = [
@@ -28,7 +26,7 @@ const LOCAL_ADMIN_LINKS: Links = [
   {link: 'Експорт даних', screen: 'ExportData'},
 ];
 
-export const getMenuLinks = (role: IRole | undefined): Links => {
+export const getMenuLinks = (role: IRole): Links => {
   const links = {
     [TEACHER]: TEACHER_LINKS,
     [STUDENT]: STUDENT_LINKS,
@@ -36,5 +34,5 @@ export const getMenuLinks = (role: IRole | undefined): Links => {
     [LOCAL_ADMIN]: LOCAL_ADMIN_LINKS,
     '': GUEST_LINKS,
   };
-  return links[role ?? ''];
+  return links[role];
 };

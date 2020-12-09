@@ -1,15 +1,20 @@
 import {useEffect} from 'react';
 import {useAuth} from '@stores/auth';
 import {useUser} from '@stores/user';
+import {useUniversity} from '@stores/university';
 import {observer} from 'mobx-react-lite';
 
 const useListenAuth = (): JSX.Element | null => {
   const {isAuthenticated} = useAuth();
-  const {setUser} = useUser();
+  const {clearUser} = useUser();
+  const {clearUniversity} = useUniversity();
 
   useEffect(() => {
-    !isAuthenticated && setUser({});
-  }, [isAuthenticated, setUser]);
+    if (!isAuthenticated) {
+      clearUser();
+      clearUniversity();
+    }
+  }, [isAuthenticated, clearUser, clearUniversity]);
 
   return null;
 };

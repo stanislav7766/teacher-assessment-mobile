@@ -48,7 +48,7 @@ const Teacher = ({navigator, teacher}: ITeachersProps) => {
   }, [onRefresh]);
 
   const {user} = useUser();
-  const userId = user.id as string;
+  const {id: userId} = user;
   const isAllowLeaveReview = user.role === STUDENT;
 
   const toLeaveAssessment = useCallback(

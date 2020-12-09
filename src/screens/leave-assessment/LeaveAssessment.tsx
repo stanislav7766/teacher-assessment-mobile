@@ -51,7 +51,7 @@ const Universities = ({navigator, activeReview}: IUniversitiesProps) => {
   }, [mapQAs]);
 
   const {user} = useUser();
-  const userId = user.id as string;
+  const {id: userId} = user;
   const {id: activeReviewId} = activeReview;
 
   const onLeaveReview = useCallback(

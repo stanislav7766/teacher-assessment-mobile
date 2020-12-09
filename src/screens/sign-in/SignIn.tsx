@@ -2,6 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {IInputs} from 'types/common';
 import {useAuth} from '@stores/auth';
 import {useUser} from '@stores/user';
+import {useUniversity} from '@stores/university';
 import {observer} from 'mobx-react-lite';
 import {fetchSign} from '@api/auth';
 import useError from '@hooks/use-error';
@@ -18,6 +19,7 @@ const SignIn = ({navigator}: SplashProps) => {
   const [refreshing, setRefreshing] = useState(true);
   const {setAuth} = useAuth();
   const {setUser} = useUser();
+  const {setUniversity} = useUniversity();
   const [inputs, setInputs] = useState<IInputs>({email: '', password: ''});
   const [responseError, setResponseError, clearResponseError] = useError();
   const [ModalError, onShowModalError] = useModalError({
@@ -37,6 +39,7 @@ const SignIn = ({navigator}: SplashProps) => {
           }
           setAuth(data.isAuthenticated);
           setUser(data.user);
+          setUniversity(data.university);
         })
         .catch(_ => {
           setResponseError(ERROR_OCCURRED);
@@ -45,7 +48,7 @@ const SignIn = ({navigator}: SplashProps) => {
           setRefreshing(false);
         });
     },
-    [setAuth, setResponseError, setUser],
+    [setAuth, setResponseError, setUser, setUniversity],
   );
 
   const onChange = (text: string, type: string): void => {
