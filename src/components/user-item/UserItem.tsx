@@ -1,11 +1,14 @@
 /* eslint-disable global-require */
-import React, {ReactNode, useState, useMemo, memo} from 'react';
+import React, {useState, useMemo, memo} from 'react';
 import {View, Image, Text, LayoutChangeEvent} from 'react-native';
 import Rating from '@common-components/rating';
 import Btn from 'common-components/btn';
+import useSvgFactory from '@hooks/use-svg-factory';
+import getBin from '@assets/svg-ts/trash-bin';
+import Touchable from '@common-components/touchable';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import {mapNextLine} from '@utils/map-text';
-import {IOnPress} from 'types/common';
+import {IOnPress, ISvgFactoryParams} from 'types/common';
 import {
   styles,
   col,
@@ -18,10 +21,16 @@ import {
   btnWidth,
 } from './styles';
 
+const binParams: ISvgFactoryParams = {
+  fillAccent: ACCENT_COLOR_BLUE,
+  width: 15,
+  height: 15,
+};
+
 const UserItem = ({
   btnTitle,
   onPressBtn,
-  DeleteUser,
+  onPressDeleteUser,
   rating,
   username,
   avatar,
@@ -32,6 +41,7 @@ const UserItem = ({
   const isFullMode = mode === 'full';
   const isRating = rating !== undefined;
   const isUserBtn = btnTitle !== undefined && onPressBtn !== undefined;
+  const isDeleteUser = onPressDeleteUser !== undefined;
 
   const [avatarWidth, setAvatarWidth] = useState(0);
   const avatarFlexStyle = {flex: isFullMode ? 0.3 : 0.7};
@@ -41,6 +51,8 @@ const UserItem = ({
   const Avatar = <Image style={avatarStyles} source={avatar ? {uri: avatar} : require('@assets/avatar.png')} />;
   const Rate = isRating && <Rating textColor={textColor} point={rating as number} />;
   const Username = <Text style={usernameStyles}>{mapNextLine(username)}</Text>;
+  const BinSvg = useSvgFactory(getBin, binParams);
+  const DeleteUser = isDeleteUser && <Touchable Child={BinSvg} onPress={onPressDeleteUser as IOnPress} />;
 
   const UserBtn = isUserBtn && (
     <Btn onPress={onPressBtn as IOnPress} height={40} width={btnWidth} title={btnTitle as string} />
@@ -100,7 +112,7 @@ const UserItem = ({
 UserItem.defaultProps = {
   onPressBtn: undefined,
   btnTitle: undefined,
-  DeleteUser: undefined,
+  onPressDeleteUser: undefined,
   rating: undefined,
   avatar: undefined,
   textColor: ACCENT_COLOR_BLUE,
@@ -109,7 +121,7 @@ UserItem.defaultProps = {
 declare interface IUserItemProps {
   onPressBtn?: () => void;
   btnTitle?: string;
-  DeleteUser?: ReactNode;
+  onPressDeleteUser?: () => void;
   rating?: number;
   username: string;
   avatar?: string;
