@@ -6,15 +6,18 @@ import {WIDTH_SCREEN} from '@constants/dimesions';
 import {isEmptyString} from '@utils/validation/isEmpty';
 import {styles, pickerSizes} from './styles';
 
+type Mode = 'single' | 'multiple';
 declare interface IParams {
   pickerItems: Array<{label: string; value: string}>;
   selectedItems: Array<string>;
+  mode: Mode;
   setSelectedItems: (items: Array<string>) => void;
 }
 const isItemInArray = (arr: Array<string>, item: string): boolean => arr.includes(item);
 
 const useModalPicker = ({
   pickerItems,
+  mode,
   setSelectedItems,
   selectedItems,
 }: IParams): [ReactNode, () => void, () => void] => {
@@ -42,11 +45,11 @@ const useModalPicker = ({
   const onShowWindow = (): void => {
     setShowWindow(true);
   };
+  const isSingle = mode === 'single';
+  const allowUpdate = !isItemInArray(selectedItems, selectedItem) && !isEmptyString(selectedItem);
 
   const closeWindow = (): void => {
-    !isItemInArray(selectedItems, selectedItem) &&
-      !isEmptyString(selectedItem) &&
-      setSelectedItems([...selectedItems, selectedItem]);
+    allowUpdate && (isSingle ? setSelectedItems([selectedItem]) : setSelectedItems([...selectedItems, selectedItem]));
     onHideWindow();
   };
 

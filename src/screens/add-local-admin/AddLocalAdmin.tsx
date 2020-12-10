@@ -1,11 +1,9 @@
 import React, {useState, useCallback, useEffect, useMemo} from 'react';
 import {Text} from 'react-native';
-import {observer} from 'mobx-react-lite';
 import {fetchFaculties} from '@api/faculty';
 import {fetchAddLocalAdmin} from '@api/local-admin';
 import {IFetchAddLocalAdminPayload} from '@api/local-admin/types';
 import {IFaculties} from 'types/faculty';
-import {useUniversity} from '@stores/university';
 import useError from '@hooks/use-error';
 import useMenuDrawer from '@hooks/use-menu-drawer';
 import Header from '@components/header';
@@ -30,18 +28,17 @@ const AddLocalAdmin = ({navigator}: SplashProps) => {
     preset: 'close',
   });
 
-  const {university} = useUniversity();
-  const {id: universityId} = university;
   const pickerItems = useMemo(() => faculties.map(faculty => ({label: faculty, value: faculty})), [faculties]);
   const [ModalPicker, onShowModalPicker] = useModalPicker({
     pickerItems,
     selectedItems: selectedFaculties,
     setSelectedItems: setSelectedFaculties,
+    mode: 'multiple',
   });
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    fetchFaculties({universityId})
+    fetchFaculties()
       .then(({err, data}) => {
         err ? setResponseError(err) : setFaculties(data);
       })
@@ -51,7 +48,7 @@ const AddLocalAdmin = ({navigator}: SplashProps) => {
       .finally(() => {
         setRefreshing(false);
       });
-  }, [setResponseError, universityId]);
+  }, [setResponseError]);
 
   const onBack = useCallback((): void => {
     navigator.pop({animation: 'fade'});
@@ -113,4 +110,4 @@ const AddLocalAdmin = ({navigator}: SplashProps) => {
   );
 };
 
-export default observer(AddLocalAdmin);
+export default AddLocalAdmin;
