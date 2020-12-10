@@ -112,7 +112,7 @@ const LocalAdmins = ({navigator}: IUniversitiesProps) => {
   return (
     <>
       {ShowMenu}
-      <Header onPressBack={onBack} onPressMenu={onShowMenu} SubHeader={<Text>Обери викладача</Text>} />
+      <Header onPressBack={onBack} onPressMenu={onShowMenu} SubHeader={<Text>Керуючі університету</Text>} />
       {ModalError}
       {ModalConfirm}
     </>

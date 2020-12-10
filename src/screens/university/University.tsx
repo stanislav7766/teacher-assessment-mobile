@@ -70,7 +70,7 @@ const Universities = ({navigator, university}: IUniversitiesProps) => {
   return (
     <>
       {ShowMenu}
-      <Header onPressBack={onBack} onPressMenu={onShowMenu} SubHeader={<Text>Обери викладача</Text>} />
+      <Header onPressBack={onBack} onPressMenu={onShowMenu} SubHeader={<Text>Оберіть викладача</Text>} />
       {ModalError}
     </>
   );

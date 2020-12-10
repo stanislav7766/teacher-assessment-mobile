@@ -55,7 +55,7 @@ const Universities = ({navigator}: IUniversitiesProps) => {
   return (
     <>
       {ShowMenu}
-      <Header onPressBack={() => {}} onPressMenu={onShowMenu} SubHeader={<Text>Обери університет</Text>} />
+      <Header onPressBack={() => {}} onPressMenu={onShowMenu} SubHeader={<Text>Оберіть університет</Text>} />
       {ModalError}
     </>
   );
