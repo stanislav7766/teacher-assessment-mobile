@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, Text} from 'react-native';
 import {getUserRole} from '@constants/roles';
 import Touchable from '@common-components/touchable';
@@ -9,6 +9,10 @@ import {observer} from 'mobx-react-lite';
 import {getMenuLinks} from '@config/menu-links';
 import {randomID} from '@utils/random-id';
 import {EasyRouterNavigator} from 'react-native-easy-router';
+import {downloadFile} from '@utils/fs';
+import Toast from 'react-native-simple-toast';
+import {fetchExportData} from '@api/export-data';
+import {ERROR_OCCURRED} from '@constants/errors';
 import {styles} from './styles';
 
 declare interface IMenuContentProps {
@@ -25,7 +29,31 @@ const MenuContent = ({navigator}: IMenuContentProps) => {
     setAuth(false);
   };
 
+  const onDownloadFile = useCallback((content: string): void => {
+    downloadFile(content, 'Дані користувачів')
+      .then(({err}) => {
+        err && Toast.show(err);
+      })
+      .catch(_err => {
+        Toast.show(ERROR_OCCURRED);
+      });
+  }, []);
+
+  const onExportData = useCallback(() => {
+    fetchExportData()
+      .then(({err, data}) => {
+        err ? Toast.show(err) : onDownloadFile(data);
+      })
+      .catch(_ => {
+        Toast.show(ERROR_OCCURRED);
+      });
+  }, [onDownloadFile]);
+
   const toScreen = (screenId: string): void => {
+    if (screenId === 'ExportData') {
+      onExportData();
+      return;
+    }
     const screenProps = screenId === 'Teacher' ? {teacher: user} : {};
     navigator.push(screenId, screenProps, {animation: 'fade'});
   };
