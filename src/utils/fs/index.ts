@@ -6,12 +6,15 @@ import {ERROR_OCCURRED} from '@constants/errors';
 const ENCODING_UTF8 = 'utf8';
 const EXT_TXT = '.txt';
 
+const isIos = Platform.OS === 'ios';
+const isAndroid = Platform.OS === 'android';
+
 type IFSOutput<Data> = {
   err: string | null;
   data: Data;
 };
 
-const Dir = Platform.OS === 'android' ? RNFetchBlob.fs.dirs.DownloadDir : RNFetchBlob.fs.dirs.DocumentDir;
+const Dir = isAndroid ? RNFetchBlob.fs.dirs.DownloadDir : RNFetchBlob.fs.dirs.DocumentDir;
 
 const createFileName = (prefix: string): string => {
   const date = new Date();
@@ -20,36 +23,35 @@ const createFileName = (prefix: string): string => {
   return `${prefix} ${ddmmyyyy} ${ms}`;
 };
 
-export const downloadFile = (data: string, prefix: string): Promise<IFSOutput<boolean>> =>
-  new Promise((resolve, _reject) => {
-    (async () => {
-      try {
-        const granted = await requestPermissionStorage();
-        if (!granted) {
-          return resolve({
-            err: `Перевірте дозвіл на використання пам'яті`,
-            data: false,
-          });
-        }
-        const fileName = `${createFileName(prefix)}${EXT_TXT}`;
-        const path = `${Dir}/${fileName}`;
-        await RNFetchBlob.fs.writeFile(path, data, ENCODING_UTF8);
-        await RNFetchBlob.android.addCompleteDownload({
-          title: fileName,
-          description: 'Download complete',
-          mime: 'application/txt',
-          path,
-          showNotification: true,
-        });
-        return resolve({
-          err: null,
-          data: true,
-        });
-      } catch (_err) {
-        return resolve({
-          data: false,
-          err: ERROR_OCCURRED,
-        });
-      }
-    })();
-  });
+export const downloadFile = async (data: string, prefix: string): Promise<IFSOutput<boolean>> => {
+  try {
+    if (isAndroid && !(await requestPermissionStorage())) {
+      return {
+        err: `Перевірте дозвіл на використання пам'яті`,
+        data: false,
+      };
+    }
+    const fileName = `${createFileName(prefix)}${EXT_TXT}`;
+    const path = `${Dir}/${fileName}`;
+
+    await RNFetchBlob.fs.writeFile(path, data, ENCODING_UTF8);
+    isIos && RNFetchBlob.ios.previewDocument(path);
+    isAndroid &&
+      (await RNFetchBlob.android.addCompleteDownload({
+        title: fileName,
+        description: 'Download complete',
+        mime: 'application/txt',
+        path,
+        showNotification: true,
+      }));
+    return {
+      err: null,
+      data: true,
+    };
+  } catch (_err) {
+    return {
+      data: false,
+      err: ERROR_OCCURRED,
+    };
+  }
+};
