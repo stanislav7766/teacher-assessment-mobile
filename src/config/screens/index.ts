@@ -7,6 +7,8 @@ import StudentAssessments from '@screens/student-assessments';
 import LeaveAssessment from '@screens/leave-assessment';
 import AddLocalAdmin from '@screens/add-local-admin';
 import LocalAdmins from '@screens/local-admins';
+import AddFacultyTeacher from '@screens/add-faculty-teacher';
+import FacultyTeachers from '@screens/faculty-teachers';
 import {TEACHER, STUDENT, LOCAL_ADMIN, ADMIN} from '@constants/roles';
 import {IRole} from 'types/role';
 
@@ -38,6 +40,8 @@ const ADMIN_SCREENS = {
 const LOCAL_ADMIN_SCREENS = {
   ...SHARED_SCREENS,
   Main: Universities,
+  FacultyTeachers,
+  AddFacultyTeacher,
 };
 
 export const getScreens = (role: IRole) => {

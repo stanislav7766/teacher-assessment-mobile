@@ -20,9 +20,9 @@ const ADMIN_LINKS: Links = [
 ];
 const LOCAL_ADMIN_LINKS: Links = [
   {link: 'Головна', screen: 'Main'},
-  {link: 'Додати викладачів', screen: 'AddTeacher'},
-  {link: 'Додати студентів', screen: 'AddStudent'},
-  {link: 'Згенерувати опитування', screen: 'AddAssessment'},
+  {link: 'Додати викладачів', screen: 'FacultyTeachers'},
+  {link: 'Додати студентів', screen: 'FacultyStudents'},
+  {link: 'Згенерувати опитування', screen: 'FacultyAssessments'},
   {link: 'Експорт даних', screen: 'ExportData'},
 ];
 
