@@ -1,12 +1,14 @@
-import {IReviews, IActiveReviews} from 'types/review';
+import {IReviews, IActiveReviews, IGeneratedReviews} from 'types/review';
 import {IResponse} from 'types/api/response';
-import {defaultReviews, defaultActiveReviews, defaultLeavedReviews} from './default';
+import {defaultReviews, defaultActiveReviews, defaultLeavedReviews, defaultGeneratedReviews} from './default';
 import {
   IFetchActiveReviewPayload,
   IFetchLeaveReviewPayload,
   IFetchStudentReviewsPayload,
   IStudentReviews,
   IFetchReviewsPayload,
+  IFetchDeleteGeneratedReviewPayload,
+  IFetchAddFacultyReviewPayload,
 } from './types';
 
 export const fetchReviews = (payload: IFetchReviewsPayload): Promise<IResponse<IReviews>> =>
@@ -40,6 +42,33 @@ export const fetchActiveReview = (payload: IFetchActiveReviewPayload): Promise<I
   });
 
 export const fetchLeaveReview = (payload: IFetchLeaveReviewPayload): Promise<IResponse<boolean>> =>
+  new Promise((resolve, _reject) => {
+    const response = {
+      err: null,
+      data: true,
+    };
+    setTimeout(() => resolve(response), 500);
+  });
+
+export const fetchGeneratedReviews = (): Promise<IResponse<IGeneratedReviews>> =>
+  new Promise((resolve, _reject) => {
+    const response = {
+      err: null,
+      data: defaultGeneratedReviews,
+    };
+    setTimeout(() => resolve(response), 500);
+  });
+
+export const fetchDeleteGeneratedReview = (payload: IFetchDeleteGeneratedReviewPayload): Promise<IResponse<boolean>> =>
+  new Promise((resolve, _reject) => {
+    const response = {
+      err: null,
+      data: true,
+    };
+    setTimeout(() => resolve(response), 500);
+  });
+
+export const fetchAddGeneratedReview = (payload: IFetchAddFacultyReviewPayload): Promise<IResponse<boolean>> =>
   new Promise((resolve, _reject) => {
     const response = {
       err: null,

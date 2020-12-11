@@ -1,3 +1,4 @@
+import {IGroups} from 'types/group';
 import {IActiveReviews, ILeavedReviews, IQAs} from 'types/review';
 
 export type IFetchLeaveReviewPayload = {
@@ -23,4 +24,13 @@ export type IFetchActiveReviewPayload = {
 
 export type IFetchReviewsPayload = {
   teacherId: string;
+};
+
+export type IFetchDeleteGeneratedReviewPayload = {
+  reviewId: string;
+};
+
+export type IFetchAddFacultyReviewPayload = {
+  teacherUsername: string;
+  groups: IGroups;
 };

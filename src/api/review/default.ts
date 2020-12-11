@@ -1,5 +1,5 @@
 import {randomID} from '@utils/random-id';
-import {IReviews, IActiveReviews, ILeavedReviews} from 'types/review';
+import {IReviews, IActiveReviews, ILeavedReviews, IGeneratedReviews} from 'types/review';
 
 const QA = [
   {
@@ -252,5 +252,22 @@ export const defaultReviews: IReviews = [
       Не очент препод, разачрованы всей группой`,
     QAs: QA,
     id: randomID(),
+  },
+];
+
+export const defaultGeneratedReviews: IGeneratedReviews = [
+  {
+    id: randomID(),
+    rating: 4.7,
+    userId: randomID(),
+    username: 'Пупкін Максим Семенович',
+    groups: ['ІП-34', 'ІК-34', 'ІС-75'],
+  },
+  {
+    id: randomID(),
+    rating: 4.7,
+    userId: randomID(),
+    username: 'Віолехін Генадій Андрійович',
+    groups: ['ІП-34', 'ІК-34', 'ІС-75'],
   },
 ];

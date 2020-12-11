@@ -1,3 +1,5 @@
+import {IGroups} from 'types/group';
+
 declare module 'types/review' {
   export type IQAs = Array<{id: string; No: number; question: string; answer: number}>;
 
@@ -30,4 +32,15 @@ declare module 'types/review' {
   };
 
   export type ILeavedReviews = Array<ILeavedReview>;
+
+  export type IGeneratedReview = {
+    id: string;
+    userId: string;
+    username: string;
+    avatar?: string;
+    rating: number;
+    groups: IGroups;
+  };
+
+  export type IGeneratedReviews = Array<IGeneratedReview>;
 }
