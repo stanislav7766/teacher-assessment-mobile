@@ -8,11 +8,11 @@
     "start": "react-native start",
     "test": "jest",
     "release:android": "cd android && gradlew assembleRelease && cd ../",
+    "postinstall": "patch-package",
     "prettier:write": "prettier --write **/*.{js,jsx,ts,tsx,json} && prettier --write *.{js,jsx,ts,tsx,json}",
     "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.13.2",
     "lottie-ios": "3.1.8",
     "lottie-react-native": "^3.5.0",
     "mobx": "^6.0.4",
@@ -48,6 +48,8 @@
     "eslint-plugin-react": "^7.21.5",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.1.2",
     "react-native-typescript-transformer": "^1.2.13",
     "react-test-renderer": "16.13.1",
