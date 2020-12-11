@@ -11,6 +11,8 @@ import AddFacultyTeacher from '@screens/add-faculty-teacher';
 import FacultyStudents from '@screens/faculty-students';
 import AddFacultyStudent from '@screens/add-faculty-student';
 import FacultyTeachers from '@screens/faculty-teachers';
+import FacultyAssessments from '@screens/faculty-assessments';
+import AddFacultyAssessment from '@screens/add-faculty-assessment';
 import {TEACHER, STUDENT, LOCAL_ADMIN, ADMIN} from '@constants/roles';
 import {IRole} from 'types/role';
 
@@ -46,6 +48,8 @@ const LOCAL_ADMIN_SCREENS = {
   AddFacultyTeacher,
   FacultyStudents,
   AddFacultyStudent,
+  FacultyAssessments,
+  AddFacultyAssessment,
 };
 
 export const getScreens = (role: IRole) => {
