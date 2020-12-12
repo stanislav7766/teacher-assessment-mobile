@@ -1,7 +1,7 @@
 declare module 'types/common' {
   type IOnPress = () => void;
   export declare interface IInputs {
-    email: string;
+    login: string;
     password: string;
   }
   export declare interface ISvgFactoryParams {

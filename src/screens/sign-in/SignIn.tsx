@@ -11,16 +11,16 @@ import {EasyRouterNavigator} from 'react-native-easy-router';
 import {ERROR_OCCURRED} from '@constants/errors';
 import SignInView from './SignIn.view';
 
-interface SplashProps {
+interface ISignInProps {
   navigator: EasyRouterNavigator;
 }
 
-const SignIn = ({navigator}: SplashProps) => {
+const SignIn = ({navigator}: ISignInProps) => {
   const [refreshing, setRefreshing] = useState(true);
   const {setAuth} = useAuth();
   const {setUser} = useUser();
   const {setUniversity} = useUniversity();
-  const [inputs, setInputs] = useState<IInputs>({email: '', password: ''});
+  const [inputs, setInputs] = useState<IInputs>({login: '', password: ''});
   const [responseError, setResponseError, clearResponseError] = useError();
   const [ModalError, onShowModalError] = useModalError({
     text: responseError,

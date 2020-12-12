@@ -8,7 +8,7 @@ import {styles} from './styles';
 
 type IOnChange = (text: string) => void;
 
-declare interface ISignProps {
+declare interface IViewProps {
   username: string;
   refresh: {refreshing: boolean; onRefresh: () => void};
   selectedFaculties: IFaculties;
@@ -26,7 +26,7 @@ const AddLocalAdminView = ({
   onPressPicker,
   username,
   refresh,
-}: ISignProps) => {
+}: IViewProps) => {
   const facultiesValue = selectedFaculties.join(', ');
   return (
     <View style={styles.container}>

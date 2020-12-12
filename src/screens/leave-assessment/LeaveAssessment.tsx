@@ -7,18 +7,16 @@ import Header from '@components/header';
 import {EasyRouterNavigator} from 'react-native-easy-router';
 import {fetchLeaveReview} from '@api/review';
 import {IFetchLeaveReviewPayload} from '@api/review/types';
-import {useUser} from '@stores/user';
-import {observer} from 'mobx-react-lite';
 import {IActiveReview, IQAs} from 'types/review';
 import {ERROR_OCCURRED} from '@constants/errors';
 import {randomID} from '@utils/random-id';
 import LeaveAssessmentView from './LeaveAssessment.view';
 
-declare interface IUniversitiesProps {
+declare interface ILeaveAssessmentProps {
   navigator: EasyRouterNavigator;
   activeReview: IActiveReview;
 }
-const Universities = ({navigator, activeReview}: IUniversitiesProps) => {
+const LeaveAssessment = ({navigator, activeReview}: ILeaveAssessmentProps) => {
   const mapQAs = useCallback((): IQAs => activeReview.QAs.map(qa => ({...qa, answer: 0, id: randomID()})), [
     activeReview.QAs,
   ]);
@@ -50,8 +48,6 @@ const Universities = ({navigator, activeReview}: IUniversitiesProps) => {
     setQAs(mapQAs());
   }, [mapQAs]);
 
-  const {user} = useUser();
-  const {id: userId} = user;
   const {id: activeReviewId} = activeReview;
 
   const onLeaveReview = useCallback(
@@ -77,7 +73,7 @@ const Universities = ({navigator, activeReview}: IUniversitiesProps) => {
   );
 
   const onPressLeaveReview = (): void => {
-    onLeaveReview({review, QAs, userId, activeReviewId});
+    onLeaveReview({review, QAs, teacherId: activeReview.teacherId, activeReviewId});
   };
 
   useEffect(() => {
@@ -107,4 +103,4 @@ const Universities = ({navigator, activeReview}: IUniversitiesProps) => {
   );
 };
 
-export default observer(Universities);
+export default LeaveAssessment;

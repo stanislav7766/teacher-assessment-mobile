@@ -14,11 +14,11 @@ import {fetchReviews, fetchActiveReview} from '@api/review';
 import {ERROR_OCCURRED} from '@constants/errors';
 import TeacherView from './Teacher.view';
 
-declare interface ITeachersProps {
+declare interface ITeacherProps {
   navigator: EasyRouterNavigator;
   teacher: ITeacher;
 }
-const Teacher = ({navigator, teacher}: ITeachersProps) => {
+const Teacher = ({navigator, teacher}: ITeacherProps) => {
   const [reviews, setReviews] = useState<IReviews>([]);
   const [refreshing, setRefreshing] = useState(true);
   const [responseError, setResponseError, clearResponseError] = useError();
@@ -48,7 +48,6 @@ const Teacher = ({navigator, teacher}: ITeachersProps) => {
   }, [onRefresh]);
 
   const {user} = useUser();
-  const {id: userId} = user;
   const isAllowLeaveReview = user.role === STUDENT;
 
   const toLeaveAssessment = useCallback(
@@ -60,7 +59,7 @@ const Teacher = ({navigator, teacher}: ITeachersProps) => {
 
   const onActiveReview = useCallback(() => {
     setRefreshing(true);
-    fetchActiveReview({userId, teacherId})
+    fetchActiveReview({teacherId})
       .then(({err, data}) => {
         err ? setResponseError(err) : toLeaveAssessment(data[0]);
       })
@@ -70,7 +69,7 @@ const Teacher = ({navigator, teacher}: ITeachersProps) => {
       .finally(() => {
         setRefreshing(false);
       });
-  }, [setResponseError, teacherId, toLeaveAssessment, userId]);
+  }, [setResponseError, teacherId, toLeaveAssessment]);
 
   const onLeaveReview = (): void => {
     onActiveReview();

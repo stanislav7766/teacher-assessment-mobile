@@ -12,11 +12,11 @@ import {EasyRouterNavigator} from 'react-native-easy-router';
 import {ERROR_OCCURRED} from '@constants/errors';
 import AddLocalAdminView from './AddLocalAdmin.view';
 
-interface SplashProps {
+interface IAddLocalAdminProps {
   navigator: EasyRouterNavigator;
 }
 
-const AddLocalAdmin = ({navigator}: SplashProps) => {
+const AddLocalAdmin = ({navigator}: IAddLocalAdminProps) => {
   const [refreshing, setRefreshing] = useState(true);
   const [username, setUsername] = useState<string>('');
   const [faculties, setFaculties] = useState<IFaculties>([]);

@@ -25,7 +25,7 @@ const UseNavigator = () => {
 
   const resetToMain = (): void => {
     if (refNavigator.current?.stack?.length === 1) return;
-    refNavigator?.current?.resetFrom(refNavigator?.current?.stack[0].id, 'Main');
+    refNavigator?.current?.resetFrom(refNavigator?.current?.stack[0].id, 'Main', {}, {animation: 'fade'});
   };
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import {IGroups} from 'types/group';
 import {IActiveReviews, ILeavedReviews, IQAs} from 'types/review';
 
 export type IFetchLeaveReviewPayload = {
-  userId: string;
+  teacherId: string;
   activeReviewId: string;
   review: string;
   QAs: IQAs;
@@ -13,12 +13,7 @@ export type IStudentReviews = {
   leaved: ILeavedReviews;
 };
 
-export type IFetchStudentReviewsPayload = {
-  studentId: string;
-};
-
 export type IFetchActiveReviewPayload = {
-  userId: string;
   teacherId: string;
 };
 

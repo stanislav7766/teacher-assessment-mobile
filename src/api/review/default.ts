@@ -61,13 +61,13 @@ const QA = [
 export const defaultActiveReviews: IActiveReviews = [
   {
     id: randomID(),
-    userId: randomID(),
+    teacherId: randomID(),
     QAs: QA,
     username: 'Перепечкін Василь Семенович',
   },
   {
     id: randomID(),
-    userId: randomID(),
+    teacherId: randomID(),
     QAs: QA,
     username: 'Пупкін Андрій Михайлович',
   },
@@ -77,7 +77,7 @@ export const defaultLeavedReviews: ILeavedReviews = [
   {
     id: randomID(),
     QAs: QA,
-    userId: randomID(),
+    teacherId: randomID(),
     review: `Не очент препод, разачрованы всей группой
     ddНе очент препод, разачрованы всей группой
     Не очент препод, разачрованы всей группой`,
@@ -87,7 +87,7 @@ export const defaultLeavedReviews: ILeavedReviews = [
   {
     id: randomID(),
     QAs: QA,
-    userId: randomID(),
+    teacherId: randomID(),
     review: `Не очент препод, разачрованы всей группой
     ddНе очент препод, разачрованы всей группой
     Не очент препод, разачрованы всей группой`,
@@ -97,7 +97,7 @@ export const defaultLeavedReviews: ILeavedReviews = [
   {
     id: randomID(),
     QAs: QA,
-    userId: randomID(),
+    teacherId: randomID(),
     review: `Не очент препод, разачрованы всей группой
     ddНе очент препод, разачрованы всей группой
     Не очент препод, разачрованы всей группой`,
@@ -110,7 +110,7 @@ export const defaultLeavedReviews: ILeavedReviews = [
     ddНе очент препод, разачрованы всей группой
     Не очент препод, разачрованы всей группой`,
     QAs: QA,
-    userId: randomID(),
+    teacherId: randomID(),
     username: 'Пупкін Андрій Михайлович',
     rating: 4.2,
   },
@@ -259,14 +259,14 @@ export const defaultGeneratedReviews: IGeneratedReviews = [
   {
     id: randomID(),
     rating: 4.7,
-    userId: randomID(),
+    teacherId: randomID(),
     username: 'Пупкін Максим Семенович',
     groups: ['ІП-34', 'ІК-34', 'ІС-75'],
   },
   {
     id: randomID(),
     rating: 4.7,
-    userId: randomID(),
+    teacherId: randomID(),
     username: 'Віолехін Генадій Андрійович',
     groups: ['ІП-34', 'ІК-34', 'ІС-75'],
   },

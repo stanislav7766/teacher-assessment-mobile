@@ -4,7 +4,6 @@ import {defaultReviews, defaultActiveReviews, defaultLeavedReviews, defaultGener
 import {
   IFetchActiveReviewPayload,
   IFetchLeaveReviewPayload,
-  IFetchStudentReviewsPayload,
   IStudentReviews,
   IFetchReviewsPayload,
   IFetchDeleteGeneratedReviewPayload,
@@ -20,7 +19,7 @@ export const fetchReviews = (payload: IFetchReviewsPayload): Promise<IResponse<I
     setTimeout(() => resolve(response), 500);
   });
 
-export const fetchStudentReviews = (payload: IFetchStudentReviewsPayload): Promise<IResponse<IStudentReviews>> =>
+export const fetchStudentReviews = (): Promise<IResponse<IStudentReviews>> =>
   new Promise((resolve, _reject) => {
     const response = {
       err: null,

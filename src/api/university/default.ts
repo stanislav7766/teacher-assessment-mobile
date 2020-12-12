@@ -4,7 +4,7 @@ import {IUniversities} from 'types/university';
 export const defaultUniversities: IUniversities = [
   {
     rating: 4.6,
-    preview: 'https://strana.ua/img/article/1262/5_main-v1551691292.jpeg',
+    preview: '',
     name: 'Национальный медицинский университет имени А. А. Богомольца',
     id: randomID(),
   },

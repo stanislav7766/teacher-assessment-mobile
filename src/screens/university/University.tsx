@@ -11,11 +11,11 @@ import {fetchTeachers} from '@api/teacher';
 import {ERROR_OCCURRED} from '@constants/errors';
 import UniversityView from './University.view';
 
-declare interface IUniversitiesProps {
+declare interface IUniversityProps {
   navigator: EasyRouterNavigator;
   university: IUniversity;
 }
-const Universities = ({navigator, university}: IUniversitiesProps) => {
+const University = ({navigator, university}: IUniversityProps) => {
   const [teachers, setTeachers] = useState<ITeachers>([]);
   const [refreshing, setRefreshing] = useState(true);
   const [responseError, setResponseError, clearResponseError] = useError();
@@ -76,4 +76,4 @@ const Universities = ({navigator, university}: IUniversitiesProps) => {
   );
 };
 
-export default Universities;
+export default University;

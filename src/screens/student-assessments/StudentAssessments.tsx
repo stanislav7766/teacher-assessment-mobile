@@ -3,19 +3,17 @@ import {Text} from 'react-native';
 import useMenuDrawer from '@hooks/use-menu-drawer';
 import Header from '@components/header';
 import useError from '@hooks/use-error';
-import {useUser} from '@stores/user';
 import {EasyRouterNavigator} from 'react-native-easy-router';
 import {useModalHeader as useModalError} from '@hooks/use-window-modal';
 import {IActiveReview, IActiveReviews, ILeavedReviews} from 'types/review';
 import {fetchStudentReviews} from '@api/review';
 import {ERROR_OCCURRED} from '@constants/errors';
-import {observer} from 'mobx-react-lite';
 import StudentAssessmentsView from './StudentAssessments.view';
 
-declare interface IUniversitiesProps {
+declare interface IStudentAssessmentsProps {
   navigator: EasyRouterNavigator;
 }
-const StudentAssessments = ({navigator}: IUniversitiesProps) => {
+const StudentAssessments = ({navigator}: IStudentAssessmentsProps) => {
   const [activeReviews, setActiveReviews] = useState<IActiveReviews>([]);
   const [leavedReviews, setLeavedReviews] = useState<ILeavedReviews>([]);
   const [refreshing, setRefreshing] = useState(true);
@@ -26,11 +24,9 @@ const StudentAssessments = ({navigator}: IUniversitiesProps) => {
     preset: 'close',
   });
 
-  const {user} = useUser();
-  const {id: studentId} = user;
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    fetchStudentReviews({studentId})
+    fetchStudentReviews()
       .then(({err, data}) => {
         if (err) {
           setResponseError(err);
@@ -45,7 +41,7 @@ const StudentAssessments = ({navigator}: IUniversitiesProps) => {
       .finally(() => {
         setRefreshing(false);
       });
-  }, [setResponseError, studentId]);
+  }, [setResponseError]);
 
   useEffect(() => {
     onRefresh();
@@ -81,4 +77,4 @@ const StudentAssessments = ({navigator}: IUniversitiesProps) => {
   );
 };
 
-export default observer(StudentAssessments);
+export default StudentAssessments;

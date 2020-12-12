@@ -14,10 +14,10 @@ import {DELETE_LOCAL_ADMIN_CONFIRM} from '@constants/message';
 import {observer} from 'mobx-react-lite';
 import LocalAdminsView from './LocalAdmins.view';
 
-declare interface IUniversitiesProps {
+declare interface ILocalAdminsProps {
   navigator: EasyRouterNavigator;
 }
-const LocalAdmins = ({navigator}: IUniversitiesProps) => {
+const LocalAdmins = ({navigator}: ILocalAdminsProps) => {
   const [localAdmins, setLocalAdmins] = useState<ILocalAdmins>([]);
   const [selectedLocalAdminId, setSelectedLocalAdminId] = useState<string>('');
   const [refreshing, setRefreshing] = useState(true);

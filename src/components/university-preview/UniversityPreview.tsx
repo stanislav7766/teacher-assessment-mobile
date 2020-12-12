@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import React, {useState, memo} from 'react';
 import {Image, View, Text, LayoutChangeEvent} from 'react-native';
 import {styles, defaultPreviewSize} from './styles';
@@ -20,7 +21,7 @@ const UniversityPreview = ({preview, name, size}: IUniversityPreviewProps) => {
       <View style={styles.mask} />
       <Image
         style={[styles.preview, {width: size?.width, height: isExtendable ? heightName : size?.height}]}
-        source={{uri: preview}}
+        source={preview ? {uri: preview} : require('@assets/university-preview.jpg')}
       />
       <Text onLayout={onLayoutH} style={styles.name}>
         {name}

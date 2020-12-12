@@ -8,17 +8,17 @@ import {row, mt25, centerXY} from './styles';
 
 type IOnChange = (text: string, type: string) => void;
 
-declare interface ISignProps {
+declare interface IViewProps {
   inputs: IInputs;
   onChange: IOnChange;
   onPress: () => void;
 }
 
-const SignInView = ({onPress, onChange, inputs}: ISignProps) => (
+const SignInView = ({onPress, onChange, inputs}: IViewProps) => (
   <View style={centerXY}>
     <Logo />
     <View style={row}>
-      <Input placeholder="Логін" value={inputs?.email} onChange={text => onChange(text, 'email')} />
+      <Input placeholder="Логін" value={inputs?.login} onChange={text => onChange(text, 'login')} />
     </View>
     <View style={row}>
       <Input placeholder="Пароль" value={inputs?.password} onChange={text => onChange(text, 'password')} secureValue />

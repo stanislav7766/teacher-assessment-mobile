@@ -14,7 +14,7 @@ declare module 'types/review' {
   export type IActiveReview = {
     id: string;
     QAs: IQAs;
-    userId: string;
+    teacherId: string;
     avatar?: string;
     username: string;
   };
@@ -24,7 +24,7 @@ declare module 'types/review' {
   export type ILeavedReview = {
     id: string;
     QAs: IQAs;
-    userId: string;
+    teacherId: string;
     review: string;
     username: string;
     avatar?: string;
@@ -35,7 +35,7 @@ declare module 'types/review' {
 
   export type IGeneratedReview = {
     id: string;
-    userId: string;
+    teacherId: string;
     username: string;
     avatar?: string;
     rating: number;
