@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "release:android": "cd android && gradlew assembleRelease && cd ../",
+    "release:android:windows": "cd android && gradlew assembleRelease && cd ../",
+    "release:android:linux": "cd android && ./gradlew assembleRelease && cd ../",
     "postinstall": "patch-package",
     "prettier:write": "prettier --write **/*.{js,jsx,ts,tsx,json} && prettier --write *.{js,jsx,ts,tsx,json}",
     "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./"
