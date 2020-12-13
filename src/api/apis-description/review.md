@@ -2,17 +2,17 @@
 
 ## <h2>Route: '/reviews/teacher-reviews'</h2>
 
-- body: see below
+- params: see below
 - token: user, university
 - Returns: data: IReviews, err: string | null
 
 <div>compare role from user with server roles<br/>
 any server role: returns teacher's reviews list<br/>
 should use id from user for this<br/></div>
-<span>body</span>
+<span>params</span>
 
 ```javascript
-//body
+//params
 {
   teacherId: string;
 }
@@ -58,7 +58,7 @@ type IReviews = Array<IReview>;
 
 ## <h2>Route: '/reviews/student-reviews'</h2>
 
-- body: empty
+- params: empty
 - token: user, university
 - Returns: data: {active: IActiveReviews, leaved: ILeavedReviews}, err: string | null
 
@@ -137,17 +137,17 @@ type ILeavedReviews = Array<ILeavedReview>;
 
 ## <h2>Route: '/reviews/student-reviews/active-review'</h2>
 
-- body: see below
+- params: see below
 - token: user, university
 - Returns: data: IActiveReview| null, err: string | null
 
-<div>compare role from user with STUDENT role; validate body(check activeReview exists for teacherId, validate universityId for teacherId(students can leave reviews for teachers from their university only))<br/>
+<div>compare role from user with STUDENT role; validate params(check activeReview exists for teacherId, validate universityId for teacherId(students can leave reviews for teachers from their university only))<br/>
 STUDENT: returns activeReview for selected teacher<br/>
-should use id from user with id from university with teacherId from body for this<br/></div>
-<span>body</span>
+should use id from user with id from university with teacherId from params for this<br/></div>
+<span>params</span>
 
 ```javascript
-//body
+//params
 {
   teacherId: string;
 }
@@ -208,7 +208,7 @@ should use id from user for this<br/></div>
 
 ## <h2>Route: '/reviews/generated-reviews'</h2>
 
-- body: empty
+- params: empty
 - token: user, university
 - Returns: data: IGeneratedReviews, err: string | null
 

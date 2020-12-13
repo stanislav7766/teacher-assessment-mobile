@@ -2,7 +2,7 @@
 
 ## <h2>Route: '/students/faculty-students'</h2>
 
-- body: empty
+- params: empty
 - token: user, university
 - Returns: data: IStudents, err: string | null
 

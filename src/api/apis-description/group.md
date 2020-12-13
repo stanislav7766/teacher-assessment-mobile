@@ -2,7 +2,7 @@
 
 ## <h2>Route: '/groups'</h2>
 
-- body: empty
+- params: empty
 - token: user, university
 - Returns: data: string[], err: string | null
 

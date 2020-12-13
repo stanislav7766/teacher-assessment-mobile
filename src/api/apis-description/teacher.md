@@ -2,17 +2,17 @@
 
 ## <h2>Route: '/teachers'</h2>
 
-- body: see below
+- params: see below
 - token: user, university
 - Returns: data: ITeachers, err: string | null
 
 <div>compare role from user with server roles<br/>
 any role: returns teachers list from university<br/>
 should use id from user<br/></div>
-<span>body</span>
+<span>params</span>
 
 ```javascript
-//body
+//params
 {
   universityId: string;
 }
@@ -54,9 +54,38 @@ type ITeachers = Array<ITeacher>;
   ...
 ```
 
+## <h2>Route: '/teachers/rating'</h2>
+
+- params: see below
+- token: user, university
+- Returns: data: boolean, err: string | null
+
+<div>compare role from user with server roles<br/>
+any role: returns teacher's rating<br/>
+should use id from user<br/></div>
+<span>params</span>
+
+```javascript
+//params
+{
+  teacherId: string;
+}
+```
+
+<span>returns example</span>
+
+```javascript
+  ...
+    //err
+    "Виникла помилка, спробуйте пізніше"//etc
+    //data
+    4.7
+  ...
+```
+
 ## <h2>Route: '/teachers/faculty-teachers'</h2>
 
-- body: empty
+- params: empty
 - token: user, university
 - Returns: data: ITeachers, err: string | null
 

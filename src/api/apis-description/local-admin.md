@@ -2,7 +2,7 @@
 
 ## <h2>Route: '/local-admins'</h2>
 
-- body: empty
+- params: empty
 - token: user, university
 - Returns: data: ILocalAdmins, err: string | null
 

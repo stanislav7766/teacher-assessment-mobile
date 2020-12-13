@@ -2,7 +2,7 @@
 
 ## <h2>Route: '/export-data'</h2>
 
-- body: empty
+- params: empty
 - token: user, university
 - Returns: data: string, err: string | nill
 
