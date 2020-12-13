@@ -60,14 +60,7 @@ const MenuContent = ({navigator}: IMenuContentProps) => {
 
   const User = (
     <View style={styles.user}>
-      <UserItem
-        mode="partial"
-        avatar={user.avatar}
-        userRole={userRole}
-        textColor="white"
-        rating={user.rating}
-        username={user.username}
-      />
+      <UserItem mode="partial" avatar={user.avatar} userRole={userRole} textColor="white" username={user.username} />
     </View>
   );
 

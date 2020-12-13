@@ -8,6 +8,10 @@ export type IFetchDeleteFacultyTeacherPayload = {
   teacherId: string;
 };
 
+export type IFetchTeacherRatingPayload = {
+  teacherId: string;
+};
+
 export type IFetchAddFacultyTeacherPayload = {
   teacherUsername: string;
   faculties: IFaculties;

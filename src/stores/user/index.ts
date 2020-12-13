@@ -1,8 +1,8 @@
 import {createContext, useContext} from 'react';
-import {IUser} from 'types/user';
+import {ICurrentUser} from 'types/user';
 import {makeAutoObservable} from 'mobx';
 
-const defaultUser: IUser = {
+const defaultUser: ICurrentUser = {
   id: '',
   username: '',
   role: '',
@@ -13,10 +13,10 @@ export class UserStore {
     makeAutoObservable(this);
   }
 
-  user: IUser = defaultUser;
+  user: ICurrentUser = defaultUser;
   userExists: boolean = false;
 
-  setUser = (user: IUser) => {
+  setUser = (user: ICurrentUser) => {
     this.user = {...user};
     this.userExists = true;
   };

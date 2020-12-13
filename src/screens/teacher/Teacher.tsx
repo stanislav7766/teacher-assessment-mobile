@@ -10,6 +10,7 @@ import {IActiveReview, IReviews} from 'types/review';
 import {observer} from 'mobx-react-lite';
 import {useUser} from '@stores/user';
 import {STUDENT} from '@constants/roles';
+import {fetchTeacherRating} from '@api/teacher';
 import {fetchReviews, fetchActiveReview} from '@api/review';
 import {ERROR_OCCURRED} from '@constants/errors';
 import TeacherView from './Teacher.view';
@@ -21,6 +22,7 @@ declare interface ITeacherProps {
 const Teacher = ({navigator, teacher}: ITeacherProps) => {
   const [reviews, setReviews] = useState<IReviews>([]);
   const [refreshing, setRefreshing] = useState(true);
+  const [rating, setRating] = useState<number>(teacher.rating);
   const [responseError, setResponseError, clearResponseError] = useError();
   const [ModalError, onShowModalError] = useModalError({
     text: responseError,
@@ -29,8 +31,22 @@ const Teacher = ({navigator, teacher}: ITeacherProps) => {
   });
 
   const {id: teacherId} = teacher;
+  console.log({rating});
+
+  const onTeacherRating = useCallback(() => {
+    rating === undefined &&
+      fetchTeacherRating({teacherId})
+        .then(({err, data}) => {
+          !err && setRating(data);
+        })
+        .catch(_err => {
+          setResponseError(ERROR_OCCURRED);
+        });
+  }, [rating, setResponseError, teacherId]);
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+    onTeacherRating();
     fetchReviews({teacherId})
       .then(({err, data}) => {
         err ? setResponseError(err) : setReviews(data);
@@ -41,7 +57,7 @@ const Teacher = ({navigator, teacher}: ITeacherProps) => {
       .finally(() => {
         setRefreshing(false);
       });
-  }, [setResponseError, teacherId]);
+  }, [onTeacherRating, setResponseError, teacherId]);
 
   useEffect(() => {
     onRefresh();
@@ -89,7 +105,7 @@ const Teacher = ({navigator, teacher}: ITeacherProps) => {
       allowBtn={isAllowLeaveReview}
       username={teacher.username}
       avatar={teacher.avatar}
-      rating={teacher.rating}
+      rating={rating}
       reviews={reviews}
       onLeaveReview={onLeaveReview}
     />

@@ -1,17 +1,18 @@
 import {IResponse} from 'types/api/response';
-import {IUser} from 'types/user';
-import {IUniversity} from 'types/university';
+import {ICurrentUser} from 'types/user';
+import {ICurrentUniversity} from 'types/university';
 import {IInputs} from 'types/common';
 import {defaultAuth, defaultUser, defaultUniversity} from './default';
 
 type IAuth = {
-  user: IUser;
+  user: ICurrentUser;
   isAuthenticated: boolean;
-  university: IUniversity;
+  university: ICurrentUniversity;
 };
 export const fetchSign = (_inputs: IInputs): Promise<IResponse<IAuth>> =>
   new Promise((resolve, _reject) => {
-    const payload = {
+    const deviceId = '';
+    const response = {
       err: null,
       data: {
         user: defaultUser,
@@ -19,5 +20,5 @@ export const fetchSign = (_inputs: IInputs): Promise<IResponse<IAuth>> =>
         university: defaultUniversity,
       },
     };
-    setTimeout(() => resolve(payload), 500);
+    setTimeout(() => resolve(response), 500);
   });

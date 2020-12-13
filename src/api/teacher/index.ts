@@ -1,13 +1,27 @@
 import {ITeachers} from 'types/teacher';
 import {IResponse} from 'types/api/response';
 import {defaultTeachers} from './default';
-import {IFetchTeachersPayload, IFetchDeleteFacultyTeacherPayload, IFetchAddFacultyTeacherPayload} from './types';
+import {
+  IFetchTeachersPayload,
+  IFetchDeleteFacultyTeacherPayload,
+  IFetchAddFacultyTeacherPayload,
+  IFetchTeacherRatingPayload,
+} from './types';
 
 export const fetchTeachers = (payload: IFetchTeachersPayload): Promise<IResponse<ITeachers>> =>
   new Promise((resolve, _reject) => {
     const response = {
       err: null,
       data: defaultTeachers,
+    };
+    setTimeout(() => resolve(response), 500);
+  });
+
+export const fetchTeacherRating = (payload: IFetchTeacherRatingPayload): Promise<IResponse<number>> =>
+  new Promise((resolve, _reject) => {
+    const response = {
+      err: null,
+      data: 4.6,
     };
     setTimeout(() => resolve(response), 500);
   });

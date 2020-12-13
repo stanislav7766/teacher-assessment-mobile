@@ -5,5 +5,10 @@ declare module 'types/university' {
     name: string;
     id: string;
   };
+  export type ICurrentUniversity = {
+    preview: string;
+    name: string;
+    id: string;
+  };
   export type IUniversities = Array<IUniversity>;
 }

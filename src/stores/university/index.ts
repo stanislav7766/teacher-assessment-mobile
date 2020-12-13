@@ -1,12 +1,11 @@
 import {createContext, useContext} from 'react';
-import {IUniversity} from 'types/university';
+import {ICurrentUniversity} from 'types/university';
 import {makeAutoObservable} from 'mobx';
 
-const defaultUniversity: IUniversity = {
+const defaultUniversity: ICurrentUniversity = {
   id: '',
   name: '',
   preview: '',
-  rating: 0,
 };
 
 export class UniversityStore {
@@ -14,10 +13,10 @@ export class UniversityStore {
     makeAutoObservable(this);
   }
 
-  university: IUniversity = defaultUniversity;
+  university: ICurrentUniversity = defaultUniversity;
   universityExists: boolean = false;
 
-  setUniversity = (university: IUniversity) => {
+  setUniversity = (university: ICurrentUniversity) => {
     this.university = {...university};
     this.universityExists = true;
   };
