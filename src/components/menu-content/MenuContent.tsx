@@ -13,6 +13,8 @@ import {downloadFile} from '@utils/fs';
 import Toast from 'react-native-simple-toast';
 import {fetchExportData} from '@api/export-data';
 import {ERROR_OCCURRED} from '@constants/errors';
+import {useUniversity} from '@stores/university';
+import {signOut} from '@utils/auth';
 import {styles} from './styles';
 
 declare interface IMenuContentProps {
@@ -21,12 +23,19 @@ declare interface IMenuContentProps {
 
 const MenuContent = ({navigator}: IMenuContentProps) => {
   const {setAuth} = useAuth();
-  const {user} = useUser();
+  const {clearUniversity} = useUniversity();
+  const {user, clearUser} = useUser();
   const userRole = getUserRole(user?.role);
   const links = getMenuLinks(user?.role);
 
-  const onLogout = (): void => {
+  const onSignOut = useCallback((): void => {
     setAuth(false);
+    clearUser();
+    clearUniversity();
+  }, [clearUniversity, clearUser, setAuth]);
+
+  const onLogout = (): void => {
+    signOut({onSignOut});
   };
 
   const onDownloadFile = useCallback((content: string): void => {

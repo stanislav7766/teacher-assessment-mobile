@@ -1,12 +1,7 @@
 import {createContext, useContext} from 'react';
 import {ICurrentUniversity} from 'types/university';
 import {makeAutoObservable} from 'mobx';
-
-const defaultUniversity: ICurrentUniversity = {
-  id: '',
-  name: '',
-  preview: '',
-};
+import {defaultUniversity} from '@constants/university';
 
 export class UniversityStore {
   constructor() {

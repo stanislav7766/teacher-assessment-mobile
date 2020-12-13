@@ -1,12 +1,7 @@
 import {createContext, useContext} from 'react';
 import {ICurrentUser} from 'types/user';
 import {makeAutoObservable} from 'mobx';
-
-const defaultUser: ICurrentUser = {
-  id: '',
-  username: '',
-  role: '',
-};
+import {defaultUser} from '@constants/user';
 
 export class UserStore {
   constructor() {

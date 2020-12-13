@@ -2,6 +2,7 @@ import {IResponse} from 'types/api/response';
 import {ICurrentUser} from 'types/user';
 import {ICurrentUniversity} from 'types/university';
 import {IInputs} from 'types/common';
+import {signOut, signIn} from '@utils/auth';
 import {defaultAuth, defaultUser, defaultUniversity} from './default';
 
 type IAuth = {
@@ -20,5 +21,14 @@ export const fetchSign = (_inputs: IInputs): Promise<IResponse<IAuth>> =>
         university: defaultUniversity,
       },
     };
+    response.err
+      ? signOut()
+      : signIn({
+          refresh: true,
+          access: 'vfvrfsv',
+          user: response.data.user,
+          university: response.data.university,
+        });
+
     setTimeout(() => resolve(response), 500);
   });

@@ -2,8 +2,10 @@ import RNFetchBlob from 'rn-fetch-blob';
 import {Platform} from 'react-native';
 import {requestPermissionStorage} from '@utils/storage-permissions';
 import {ERROR_OCCURRED} from '@constants/errors';
+import {IFileExistsResponse, IReadFileResponse, IWriteFileResponse} from './types';
 
 const ENCODING_UTF8 = 'utf8';
+type IEncoding = 'utf8' | 'ascii' | 'base64';
 const EXT_TXT = '.txt';
 
 const isIos = Platform.OS === 'ios';
@@ -15,6 +17,8 @@ type IFSOutput<Data> = {
 };
 
 const Dir = isAndroid ? RNFetchBlob.fs.dirs.DownloadDir : RNFetchBlob.fs.dirs.DocumentDir;
+
+export const {DocumentDir: DocumentDirPath} = RNFetchBlob.fs.dirs;
 
 const createFileName = (prefix: string): string => {
   const date = new Date();
@@ -55,3 +59,27 @@ export const downloadFile = async (data: string, prefix: string): Promise<IFSOut
     };
   }
 };
+
+export const writeFile = (path: string, data: string, encoding?: IEncoding): Promise<IWriteFileResponse> =>
+  new Promise(resolve => {
+    RNFetchBlob.fs
+      .writeFile(path, data, encoding ?? ENCODING_UTF8)
+      .then(() => resolve({err: null, result: true}))
+      .catch(err => resolve({err: err.Message, result: false}));
+  });
+
+export const readFile = (path: string, encoding?: IEncoding): Promise<IReadFileResponse> =>
+  new Promise(resolve => {
+    RNFetchBlob.fs
+      .readFile(path, encoding ?? ENCODING_UTF8)
+      .then(content => resolve({err: null, result: content}))
+      .catch(err => resolve({err: err.Message, result: null}));
+  });
+
+export const fileExists = (path: string): Promise<IFileExistsResponse> =>
+  new Promise(resolve => {
+    RNFetchBlob.fs
+      .exists(path)
+      .then(exists => resolve({err: null, result: exists}))
+      .catch(err => resolve({err: err.Message, result: false}));
+  });
