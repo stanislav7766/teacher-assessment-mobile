@@ -31,7 +31,6 @@ const Teacher = ({navigator, teacher}: ITeacherProps) => {
   });
 
   const {id: teacherId} = teacher;
-  console.log({rating});
 
   const onTeacherRating = useCallback(() => {
     rating === undefined &&
