@@ -1,6 +1,8 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import {styles as layoutStyles} from '@common-styles/layout';
+import {isTablet, WIDTH_SCREEN} from '@utils/isTablet';
+import {itemWidth} from '@constants/indent';
 
 const {centerXY} = layoutStyles;
 
@@ -21,3 +23,5 @@ export const pickerSizes: {width: number; height: number; itemHeight: number} = 
   height: 200,
   itemHeight: 40,
 };
+
+export const windowWidth = isTablet() ? itemWidth : WIDTH_SCREEN * 0.8;

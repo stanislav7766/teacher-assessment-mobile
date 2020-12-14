@@ -4,7 +4,7 @@ import {screensStyles} from '@common-styles/screens';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 
 export const {row, myBottom, myTop} = layoutStyles;
-export const {container, footer} = screensStyles;
+export const {container, footer, item} = screensStyles;
 
 type Styles = {
   container: ViewStyle;
@@ -15,15 +15,16 @@ type Styles = {
 
 export const styles = StyleSheet.create<Styles>({
   container: {...container},
-  item: {...row, ...myTop},
+  item: {...row, ...myTop, ...item},
   faculties: {
     fontWeight: 'bold',
     fontSize: 16,
     color: ACCENT_COLOR_BLUE,
+    ...item,
   },
   underline: {
     ...row,
-    width: '90%',
+    ...item,
     justifyContent: 'flex-start',
     borderBottomColor: ACCENT_COLOR_BLUE,
     borderBottomWidth: 2,

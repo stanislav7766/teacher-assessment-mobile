@@ -4,7 +4,7 @@ import {HEIGHT_SCREEN} from '@constants/dimesions';
 import {screensStyles} from '@common-styles/screens';
 
 const {row, myTop} = stylesLayout;
-const {container} = screensStyles;
+const {container, item} = screensStyles;
 type Styles = {
   container: ViewStyle;
   scrollview: ViewStyle;
@@ -15,6 +15,6 @@ type Styles = {
 export const styles = StyleSheet.create<Styles>({
   container: {position: 'absolute', ...container, height: HEIGHT_SCREEN},
   scrollview: {flexGrow: 1, justifyContent: 'center', marginBottom: container.marginTop},
-  btn: {...row, ...myTop},
-  input: {...row},
+  btn: {...row, ...myTop, ...item},
+  input: {...row, ...item},
 });

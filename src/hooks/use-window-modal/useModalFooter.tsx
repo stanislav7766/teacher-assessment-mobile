@@ -2,8 +2,7 @@ import React, {useState, ReactNode} from 'react';
 import {Text, View} from 'react-native';
 import Window, {IFooter} from '@components/window';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
-import {WIDTH_SCREEN} from '@constants/dimesions';
-import {styles} from './styles';
+import {styles, windowWidth} from './styles';
 
 declare interface IParams {
   text: string;
@@ -30,7 +29,7 @@ const useModalFooter = ({text, preset, onBottomNo, onBottomYes}: IParams): [Reac
       onBottomYes={onBottomYes}
       onBottomNo={onBottomNo}
       backgroundColor={ACCENT_COLOR_BLUE}
-      width={WIDTH_SCREEN * 0.8}
+      width={windowWidth}
     >
       <View style={styles.windowTextWrap}>
         <Text style={styles.windowText}>{text}</Text>

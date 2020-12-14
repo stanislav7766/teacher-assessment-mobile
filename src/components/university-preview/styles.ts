@@ -1,5 +1,6 @@
 import {StyleSheet, ViewStyle, ImageStyle, TextStyle} from 'react-native';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
+import {isTablet} from '@utils/isTablet';
 
 type Styles = {
   preview: ImageStyle;
@@ -9,7 +10,7 @@ type Styles = {
 };
 
 type IDefaultPreviewSize = {width: '100%'; height: number};
-export const defaultPreviewSize: IDefaultPreviewSize = {width: '100%', height: 70};
+export const defaultPreviewSize: IDefaultPreviewSize = {width: '100%', height: isTablet() ? 100 : 70};
 
 export const styles = StyleSheet.create<Styles>({
   preview: {

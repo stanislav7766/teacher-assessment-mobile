@@ -6,7 +6,7 @@ import UserItem from '@components/user-item';
 import Section from '@components/section';
 import {IActiveReview, IActiveReviews, ILeavedReview, ILeavedReviews} from 'types/review';
 import {randomID} from '@utils/random-id';
-import {styles, myBottom, footer} from './styles';
+import {styles, footer} from './styles';
 
 declare interface IViewProps {
   onPressActiveReview: (activeReview: IActiveReview) => void;
@@ -42,8 +42,16 @@ const StudentAssessmentsView = ({leavedReviews, activeReviews, refresh, onPressA
       />
     </View>
   );
-  const HeaderLeavedReviews = <Section text="Залишені відгуки" />;
-  const Header = <Section text="Активні відгуки" />;
+  const HeaderLeavedReviews = (
+    <View style={styles.section}>
+      <Section text="Залишені відгуки" />
+    </View>
+  );
+  const Header = (
+    <View style={styles.section}>
+      <Section text="Активні відгуки" />
+    </View>
+  );
   const Footer = <View style={footer} />;
 
   const LeavedReviews = (

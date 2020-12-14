@@ -2,9 +2,8 @@ import React, {useState, ReactNode, useEffect} from 'react';
 import WheelPicker from '@common-components/wheel-picker';
 import Window from '@components/window';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
-import {WIDTH_SCREEN} from '@constants/dimesions';
 import {isEmptyString} from '@utils/validation/isEmpty';
-import {styles, pickerSizes} from './styles';
+import {styles, pickerSizes, windowWidth} from './styles';
 
 type Mode = 'single' | 'multiple';
 declare interface IParams {
@@ -42,7 +41,6 @@ const useModalPicker = ({
       }}
     />
   );
-
   const onHideWindow = (): void => {
     setShowWindow(false);
   };
@@ -63,7 +61,7 @@ const useModalPicker = ({
       preset="check"
       closeWindow={closeWindow}
       backgroundColor={ACCENT_COLOR_BLUE}
-      width={WIDTH_SCREEN * 0.8}
+      width={windowWidth}
     >
       {Picker}
     </Window>
