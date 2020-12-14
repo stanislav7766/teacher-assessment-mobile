@@ -35,7 +35,7 @@ const getConfigLeft = ({drawerWidth, paddingGesture, open}: IConfigOptions): ICo
     closed,
     inPaddingGestureBounds: (offset: number): boolean => !open && offset >= closed && offset <= paddingGesture,
     inBounds: (offset: number): boolean => offset >= paddingGesture && offset <= opened,
-    inDrawerBounds: (offset: number): boolean => offset >= SCREEN_WIDTH - opened && offset <= SCREEN_WIDTH,
+    inDrawerBounds: (offset: number): boolean => offset >= closed && offset <= opened,
     needOpenOrClose: (offset: number): boolean => {
       const needShowMenu = offset > 0 ? 'open' : 'close';
       return needShowMenu === 'open';

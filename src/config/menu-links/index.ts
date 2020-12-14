@@ -15,6 +15,7 @@ const STUDENT_LINKS: Links = [
 ];
 const ADMIN_LINKS: Links = [
   {link: 'Головна', screen: 'Main'},
+  {link: 'Додати викладачів', screen: 'AddFacultyTeacher'},
   {link: 'Додати керуючих', screen: 'LocalAdmins'},
   {link: 'Експорт даних', screen: 'ExportData'},
 ];

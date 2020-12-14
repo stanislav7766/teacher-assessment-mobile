@@ -5,7 +5,7 @@ import {IReviews, IReview} from 'types/review';
 import VirtualList, {IRenderItem} from '@common-components/virtual-list';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import ViewAssessment from '@components/view-assessment';
-import {styles, myBottom} from './styles';
+import {styles, myBottom, footer} from './styles';
 
 declare interface IViewProps {
   avatar?: string;
@@ -39,7 +39,7 @@ const TeacherView = ({rating, reviews, avatar, allowBtn, username, refresh, onLe
       />
     </View>
   );
-  const Footer = <View style={myBottom} />;
+  const Footer = <View style={footer} />;
   return (
     <VirtualList<IReview>
       containerStyle={styles.container}

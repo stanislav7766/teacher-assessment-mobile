@@ -4,7 +4,7 @@ import {screensStyles} from '@common-styles/screens';
 import {DEFAULT_INDENT} from '@constants/indent';
 
 export const {row, myBottom, myTop} = layoutStyles;
-const {container} = screensStyles;
+export const {container, footer} = screensStyles;
 
 type Styles = {
   container: ViewStyle;

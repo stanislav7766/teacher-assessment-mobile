@@ -1,8 +1,10 @@
 import {StyleSheet, ViewStyle, TextStyle} from 'react-native';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import {styles as layoutStyles} from '@common-styles/layout';
+import {screensStyles} from '@common-styles/screens';
 
 export const {row, col, myTop, left, myBottom, mx0} = layoutStyles;
+const {footer} = screensStyles;
 
 type Styles = {
   drawer: ViewStyle;
@@ -25,6 +27,6 @@ export const styles = StyleSheet.create<Styles>({
   linksWrap: {...col, ...left},
   separator: {...row, ...myTop, width: '90%', borderBottomColor: '#fff', borderBottomWidth: 2},
   bottom: {position: 'absolute', bottom: 0, right: 0, left: 0},
-  footer: {...row, justifyContent: 'flex-end', ...myBottom},
+  footer: {...row, justifyContent: 'flex-end', ...footer},
   logout: {fontWeight: 'bold', fontSize: 16, color: '#fff'},
 });

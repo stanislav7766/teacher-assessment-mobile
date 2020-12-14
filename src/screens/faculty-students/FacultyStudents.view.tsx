@@ -9,7 +9,7 @@ import Touchable from '@common-components/touchable';
 import UniversityPreview from '@components/university-preview';
 import {IStudents, IStudent} from 'types/student';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
-import {styles, myBottom} from './styles';
+import {styles, myBottom, footer} from './styles';
 
 declare interface IViewProps {
   preview: string;
@@ -52,7 +52,7 @@ const FacultyStudentsView = ({
     </View>
   );
 
-  const Footer = <View style={myBottom} />;
+  const Footer = <View style={footer} />;
   const Header = (
     <>
       <View style={[styles.item, myBottom]}>

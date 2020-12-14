@@ -3,7 +3,7 @@ import {styles as layoutStyles} from '@common-styles/layout';
 import {screensStyles} from '@common-styles/screens';
 
 export const {row, myBottom, myTop} = layoutStyles;
-const {container} = screensStyles;
+export const {container, footer} = screensStyles;
 
 type Styles = {
   container: ViewStyle;

@@ -4,7 +4,7 @@ import {screensStyles} from '@common-styles/screens';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 
 export const {row, myBottom, myTop} = layoutStyles;
-const {container} = screensStyles;
+export const {container, footer} = screensStyles;
 
 type Styles = {
   container: ViewStyle;

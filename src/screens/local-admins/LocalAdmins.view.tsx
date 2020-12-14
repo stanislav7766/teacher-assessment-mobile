@@ -9,7 +9,7 @@ import UserItem from '@components/user-item';
 import UniversityPreview from '@components/university-preview';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import {ILocalAdmin, ILocalAdmins} from 'types/local-admin';
-import {styles, myBottom} from './styles';
+import {styles, footer} from './styles';
 
 declare interface IViewProps {
   preview: string;
@@ -51,7 +51,7 @@ const LocalAdminsView = ({localAdmins, preview, name, onPressDelete, onPressAddL
     </>
   );
 
-  const Footer = <View style={myBottom} />;
+  const Footer = <View style={footer} />;
   const Header = (
     <>
       <View style={[styles.item]}>

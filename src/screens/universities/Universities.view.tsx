@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import UniverityItem from '@components/university-item';
 import VirtualList, {IRenderItem} from '@common-components/virtual-list';
 import {IUniversities, IUniversity} from 'types/university';
-import {styles, myBottom} from './styles';
+import {styles, footer} from './styles';
 
 declare interface IViewProps {
   onPress: (university: IUniversity) => void;
@@ -25,7 +25,7 @@ const UniversitiesView = ({universities, refresh, onPress}: IViewProps) => {
     </View>
   );
 
-  const Footer = <View style={myBottom} />;
+  const Footer = <View style={footer} />;
 
   return (
     <VirtualList<IUniversity>

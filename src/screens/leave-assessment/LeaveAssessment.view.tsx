@@ -3,7 +3,7 @@ import {View, ScrollView, RefreshControl} from 'react-native';
 import FillAssessment from '@components/fill-assessment';
 import Btn from 'common-components/btn';
 import {IQAs} from 'types/review';
-import {styles, myBottom, myTop, row} from './styles';
+import {styles, myTop, row, footer} from './styles';
 
 declare interface IViewProps {
   username: string;
@@ -26,7 +26,7 @@ const LeaveAssessmentView = ({
   refresh,
   updateReview,
 }: IViewProps) => {
-  const Footer = <View style={myBottom} />;
+  const Footer = <View style={footer} />;
   return (
     <ScrollView refreshControl={<RefreshControl {...refresh} />} style={styles.container}>
       <View style={[row, myTop]}>

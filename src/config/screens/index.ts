@@ -37,6 +37,7 @@ const STUDENT_SCREENS = {
 };
 const ADMIN_SCREENS = {
   ...SHARED_SCREENS,
+  AddFacultyTeacher,
   Main: Universities,
   AddLocalAdmin,
   LocalAdmins,

@@ -9,7 +9,7 @@ import UserItem from '@components/user-item';
 import UniversityPreview from '@components/university-preview';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import {IGeneratedReviews, IGeneratedReview} from 'types/review';
-import {styles, myBottom} from './styles';
+import {styles, footer} from './styles';
 
 declare interface IViewProps {
   preview: string;
@@ -51,7 +51,7 @@ const FacultyAssessmentsView = ({reviews, preview, name, onPressDelete, onPressA
     </>
   );
 
-  const Footer = <View style={myBottom} />;
+  const Footer = <View style={footer} />;
   const Header = (
     <>
       <View style={[styles.item]}>

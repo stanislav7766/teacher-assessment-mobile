@@ -5,7 +5,7 @@ import UserItem from '@components/user-item';
 import UniversityPreview from '@components/university-preview';
 import {ITeachers, ITeacher} from 'types/teacher';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
-import {styles, myBottom} from './styles';
+import {styles, myBottom, footer} from './styles';
 
 declare interface IViewProps {
   preview: string;
@@ -33,7 +33,7 @@ const UniversityView = ({teachers, preview, name, onPress, refresh}: IViewProps)
     </View>
   );
 
-  const Footer = <View style={myBottom} />;
+  const Footer = <View style={footer} />;
   const Header = (
     <View style={[styles.item, myBottom]}>
       <UniversityPreview preview={preview} name={name} />

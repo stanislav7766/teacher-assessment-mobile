@@ -1,4 +1,4 @@
-import React, {useState, ReactNode} from 'react';
+import React, {useState, ReactNode, useEffect} from 'react';
 import WheelPicker from '@common-components/wheel-picker';
 import Window from '@components/window';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
@@ -25,6 +25,10 @@ const useModalPicker = ({
 
   const firstItem = pickerItems[0]?.value ?? '';
   const [selectedItem, setSelectedItem] = useState<string>(firstItem);
+
+  useEffect(() => {
+    setSelectedItem(firstItem);
+  }, [firstItem]);
 
   const Picker = (
     <WheelPicker
