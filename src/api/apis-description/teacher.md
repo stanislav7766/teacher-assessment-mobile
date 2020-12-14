@@ -152,8 +152,8 @@ should use id from user with id from university<br/></div>
 - token: user, university
 - Returns: data: boolean, err: string | null
 
-<div>compare role from user with LOCAL_ADMIN role<br/>
-LOCAL_ADMIN: returns result of operation<br/>
+<div>compare role from user with LOCAL_ADMIN, ADMIN role<br/>
+LOCAL_ADMIN or ADMIN: returns result of operation<br/>
 should use id from user with id from university<br/></div>
 <span>body</span>
 
