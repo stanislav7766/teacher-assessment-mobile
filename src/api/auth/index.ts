@@ -3,6 +3,7 @@ import {ICurrentUser} from 'types/user';
 import {ICurrentUniversity} from 'types/university';
 import {IInputs} from 'types/common';
 import {signOut, signIn} from '@utils/auth';
+import {makeRequest} from '@utils/api/make-request';
 import {defaultAuth, defaultUser, defaultUniversity} from './default';
 
 type IAuth = {
@@ -21,6 +22,18 @@ export const fetchSign = (_inputs: IInputs): Promise<IResponse<IAuth>> =>
         university: defaultUniversity,
       },
     };
+
+    makeRequest('POST', 'auth/sign-in', {
+      deviceId,
+      ..._inputs,
+    })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
     response.err
       ? signOut()
       : signIn({
