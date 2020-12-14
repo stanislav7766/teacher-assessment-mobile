@@ -1,7 +1,7 @@
 import {randomID} from '@utils/random-id';
 import {IReviews, IActiveReviews, ILeavedReviews, IGeneratedReviews} from 'types/review';
 
-const QA = [
+export const QA = [
   {
     No: 1,
     question: 'Доступність матеріалу',
