@@ -8,7 +8,7 @@ type Styles = {
 };
 
 export const screensStyles = StyleSheet.create<Styles>({
-  container: {marginTop: 50 + DEFAULT_INDENT, minHeight: 100},
+  container: {marginTop: 50 + DEFAULT_INDENT, minHeight: 100, alignSelf: 'center'},
   item: {alignSelf: 'center', width: itemWidth},
   footer: {marginBottom: 50},
 });
