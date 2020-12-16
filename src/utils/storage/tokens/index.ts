@@ -1,5 +1,6 @@
 import {DocumentDirPath, readFile, writeFile, fileExists} from '@utils/fs';
 import {IWriteFileResponse} from '@utils/fs/types';
+import {decode as atob} from 'base-64';
 import {isAccess, isValidToken} from './hepers';
 import {ITokenType, ITokenItem, IGetTokenResponse} from './types';
 

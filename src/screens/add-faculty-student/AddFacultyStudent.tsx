@@ -97,7 +97,7 @@ const AddFacultyStudent = ({navigator}: IAddFacultyStudentProps) => {
   }, [onRefresh]);
 
   const onPressAdd = (): void => {
-    onAddFacultyStudent({faculty: selectedFaculties[0], studentUsername: username});
+    onAddFacultyStudent({faculty: selectedFaculties[0], group: selectedGroups[0], studentUsername: username});
   };
   const onClearSelectedValue = (_picker: IPicker): void => {
     isPickerFaculty(_picker) ? setSelectedFaculties([]) : setSelectedGroups([]);

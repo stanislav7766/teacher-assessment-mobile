@@ -1,19 +1,30 @@
 import {IStudents} from 'types/student';
 import {IResponse} from 'types/api/response';
-import {ERROR_OCCURRED} from '@constants/errors';
 import {fetchFaculties} from '@api/faculty';
 import {fetchGroups} from '@api/group';
 import {errStrExists} from '@utils/validation/isError';
-import {defaultStudents} from './default';
+import {makeRequest} from '@utils/api/axios';
+import {ERROR_OCCURRED} from '@constants/errors';
 import {IFetchDeleteFacultyStudentPayload, IFetchAddFacultyStudentPayload, IFetchFacultiesGroups} from './types';
 
 export const fetchFacultyStudents = (): Promise<IResponse<IStudents>> =>
   new Promise((resolve, _reject) => {
-    const response = {
-      err: null,
-      data: defaultStudents,
-    };
-    setTimeout(() => resolve(response), 500);
+    makeRequest('GET', 'students/faculty-students', {})
+      .then(({data}) => {
+        const res = {
+          err: null,
+          data,
+        };
+        resolve(res);
+      })
+      .catch(err => {
+        const message = err?.response?.data?.message ?? err?.message;
+        const response = {
+          err: message ?? ERROR_OCCURRED,
+          data: [],
+        };
+        resolve(response);
+      });
   });
 
 export const fetchFacultiesGroups = (): Promise<IResponse<IFetchFacultiesGroups>> =>
@@ -48,18 +59,40 @@ export const fetchFacultiesGroups = (): Promise<IResponse<IFetchFacultiesGroups>
 
 export const fetchDeleteFacultyStudent = (payload: IFetchDeleteFacultyStudentPayload): Promise<IResponse<boolean>> =>
   new Promise((resolve, _reject) => {
-    const response = {
-      err: null,
-      data: true,
-    };
-    setTimeout(() => resolve(response), 500);
+    makeRequest('POST', 'students/faculty-students/delete', payload)
+      .then(({data}) => {
+        const res = {
+          err: null,
+          data,
+        };
+        resolve(res);
+      })
+      .catch(err => {
+        const message = err?.response?.data?.message ?? err?.message;
+        const response = {
+          err: message ?? ERROR_OCCURRED,
+          data: false,
+        };
+        resolve(response);
+      });
   });
 
 export const fetchAddFacultyStudent = (payload: IFetchAddFacultyStudentPayload): Promise<IResponse<boolean>> =>
   new Promise((resolve, _reject) => {
-    const response = {
-      err: null,
-      data: true,
-    };
-    setTimeout(() => resolve(response), 500);
+    makeRequest('POST', 'students/faculty-students/add', payload)
+      .then(({data}) => {
+        const res = {
+          err: null,
+          data,
+        };
+        resolve(res);
+      })
+      .catch(err => {
+        const message = err?.response?.data?.message ?? err?.message;
+        const response = {
+          err: message ?? ERROR_OCCURRED,
+          data: false,
+        };
+        resolve(response);
+      });
   });

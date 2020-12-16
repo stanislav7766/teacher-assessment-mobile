@@ -1,4 +1,4 @@
-const BASE_URL = 'http://apidomain.com/api/';
+const BASE_URL = 'https://739c486e72e8.ngrok.io/api/';
 const TIMEOUT = 7000;
 
 export const config = {

@@ -1,5 +1,5 @@
 import {IFaculties, IFaculty} from 'types/faculty';
-import {IGroups} from 'types/group';
+import {IGroup, IGroups} from 'types/group';
 
 export type IFetchDeleteFacultyStudentPayload = {
   studentId: string;
@@ -8,6 +8,7 @@ export type IFetchDeleteFacultyStudentPayload = {
 export type IFetchAddFacultyStudentPayload = {
   studentUsername: string;
   faculty: IFaculty;
+  group: IGroup;
 };
 
 export type IFetchFacultiesGroups = {
