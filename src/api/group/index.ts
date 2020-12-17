@@ -1,24 +1,10 @@
 import {IGroups} from 'types/group';
 import {IResponse} from 'types/api/response';
-import {makeRequest} from '@utils/api/axios';
-import {ERROR_OCCURRED} from '@constants/errors';
+import {IRequester, makeRequest} from '@utils/api/axios';
+import {withResponseContract} from '@utils/api/with-response-contract';
 
-export const fetchGroups = (): Promise<IResponse<IGroups>> =>
-  new Promise((resolve, _reject) => {
-    makeRequest('GET', 'groups', {})
-      .then(({data}) => {
-        const res = {
-          err: null,
-          data,
-        };
-        resolve(res);
-      })
-      .catch(err => {
-        const message = err?.response?.data?.message ?? err?.message;
-        const response = {
-          err: message ?? ERROR_OCCURRED,
-          data: [],
-        };
-        resolve(response);
-      });
-  });
+export const fetchGroups = async (): Promise<IResponse<IGroups>> => {
+  const fetcher = withResponseContract<IRequester, IGroups>(makeRequest, []);
+  const result = await fetcher('GET', 'groups', {});
+  return result;
+};

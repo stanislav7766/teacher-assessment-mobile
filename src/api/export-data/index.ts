@@ -1,23 +1,9 @@
 import {IResponse} from 'types/api/response';
-import {makeRequest} from '@utils/api/axios';
-import {ERROR_OCCURRED} from '@constants/errors';
+import {makeRequest, IRequester} from '@utils/api/axios';
+import {withResponseContract} from '@utils/api/with-response-contract';
 
-export const fetchExportData = (): Promise<IResponse<string>> =>
-  new Promise((resolve, _reject) => {
-    makeRequest('GET', 'export-data', {})
-      .then(({data}) => {
-        const res = {
-          err: null,
-          data,
-        };
-        resolve(res);
-      })
-      .catch(err => {
-        const message = err?.response?.data?.message ?? err?.message;
-        const response = {
-          err: message ?? ERROR_OCCURRED,
-          data: '',
-        };
-        resolve(response);
-      });
-  });
+export const fetchExportData = async (): Promise<IResponse<string>> => {
+  const fetcher = withResponseContract<IRequester, string>(makeRequest, '');
+  const result = await fetcher('GET', 'export-data', {});
+  return result;
+};

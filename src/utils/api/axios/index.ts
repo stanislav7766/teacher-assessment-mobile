@@ -10,8 +10,9 @@ const createQueryParams = (params: any): string =>
 
 const authedInstance = axios.create(config);
 // const instance = axios.create(config);
+export type IRequester = (method: IMethod, url: string, params: any) => Promise<AxiosResponse>;
 
-export const makeRequest = async (method: IMethod, path: string, params: unknown) => {
+export const makeRequest: IRequester = async (method: IMethod, path: string, params: unknown) => {
   const source = axios.CancelToken.source();
   const opts: AxiosRequestConfig = {
     method,
@@ -54,22 +55,6 @@ authedInstance.interceptors.request.use(
     return request;
   },
   (error: AxiosError) => {
-    return Promise.reject(error);
-  },
-);
-
-authedInstance.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return Promise.resolve(response);
-  },
-  (error: AxiosError) => {
-    const statusCode: number = error.response?.status as number;
-    // 403
-    // 400
-    if (statusCode === 400) return Promise.reject(error);
-    if (statusCode === 404 || (statusCode >= 500 && statusCode <= 509))
-      return Promise.reject(Error('Виникла пмилка, спробуйте пізніше'));
-
     return Promise.reject(error);
   },
 );

@@ -1,53 +1,34 @@
 import {IResponse} from 'types/api/response';
-import {ICurrentUser} from 'types/user';
-import {ICurrentUniversity} from 'types/university';
 import {IInputs} from 'types/common';
 import {signOut, signIn} from '@utils/auth';
-import {makeRequest} from '@utils/api/axios';
+import {makeRequest, IRequester} from '@utils/api/axios';
+import {withResponseContract} from '@utils/api/with-response-contract';
 import {defaultUser} from '@constants/user';
 import {defaultUniversity} from '@constants/university';
-import {ERROR_OCCURRED} from '@constants/errors';
+import {IAuth, IAuthResponse} from './types';
 
-type IAuth = {
-  user: ICurrentUser;
-  isAuthenticated: boolean;
-  university: ICurrentUniversity;
+const defaultAuthResponse: IAuthResponse = {
+  accessToken: '',
+  refreshToken: false,
+  university: defaultUniversity,
+  user: defaultUser,
 };
-export const fetchSign = (_inputs: IInputs): Promise<IResponse<IAuth>> =>
-  new Promise((resolve, _reject) => {
-    const deviceId = '';
-    makeRequest('POST', 'auth/sign-in', {
-      deviceId,
-      ..._inputs,
-    })
-      .then(({data}) => {
-        const res = {
-          err: null,
-          data: {
-            user: data.user,
-            isAuthenticated: true,
-            university: data.university,
-          },
-        };
-        signIn({
-          refresh: data.refreshToken,
-          access: data.accessToken,
-          user: data.user,
-          university: data.university,
-        });
-        resolve(res);
-      })
-      .catch(err => {
-        const {message} = err?.response?.data;
-        const response = {
-          err: message ?? ERROR_OCCURRED,
-          data: {
-            user: defaultUser,
-            isAuthenticated: false,
-            university: defaultUniversity,
-          },
-        };
-        signOut();
-        resolve(response);
-      });
+
+export const fetchSign = async (_inputs: IInputs): Promise<IResponse<IAuth>> => {
+  const deviceId = '';
+  const fetcher = withResponseContract<IRequester, IAuthResponse>(makeRequest, defaultAuthResponse);
+  const {err, data} = await fetcher('POST', 'auth/sign-in', {
+    deviceId,
+    ..._inputs,
   });
+  err
+    ? signOut()
+    : signIn({
+        access: data.accessToken,
+        refresh: data.refreshToken,
+        user: data.user,
+        university: data.university,
+      });
+  const {user, university} = data;
+  return {err, data: {user, university, isAuthenticated: true}};
+};
