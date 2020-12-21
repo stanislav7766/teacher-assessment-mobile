@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import MenuDrawer from '@common-components/menu-drawer';
+import {MenuDrawer} from '@stanislav7766/rn-menu-drawer';
 import {View} from 'react-native';
 
 const MenuDrawerTest = () => {
@@ -11,9 +11,9 @@ const MenuDrawerTest = () => {
       onShowMenu={() => {}}
       backgroundColor="#fff"
       position="right"
-      menuWidth={200}
+      drawerWidth={200}
       animationTime={250}
-      menuContent={<View />}
+      MenuContent={<View />}
       open
       opacity={0.5}
     >

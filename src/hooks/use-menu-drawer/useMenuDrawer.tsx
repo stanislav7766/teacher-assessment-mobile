@@ -1,5 +1,5 @@
 import React, {useState, ReactNode} from 'react';
-import MenuDrawer from '@common-components/menu-drawer';
+import {MenuDrawer} from '@stanislav7766/rn-menu-drawer';
 import MenuContent from '@components/menu-content';
 import {ACCENT_COLOR_BLUE} from '@constants/colors';
 import {WIDTH_SCREEN} from '@constants/dimesions';
@@ -24,10 +24,10 @@ const useMenuDrawer = ({children, navigator}: IParams): [ReactNode, () => void, 
   const ShowMenu = (
     <MenuDrawer
       open={shownMenu}
-      menuContent={<MenuContent navigator={navigator} />}
+      MenuContent={<MenuContent navigator={navigator} />}
       position="right"
       onShowMenu={setShowMenu}
-      menuWidth={isTablet() ? 300 : WIDTH_SCREEN * 0.7}
+      drawerWidth={isTablet() ? 300 : WIDTH_SCREEN * 0.7}
       animationTime={250}
       paddingGesture={50}
       tapToClose
